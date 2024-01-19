@@ -27,8 +27,13 @@ class BuildListWidget extends StatelessWidget {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => DetailsView(
-                  detail: movieList[index],
+                builder: (context) =>  DetailsView(
+                  title: movieList[index].title ?? '',
+                  movieId: movieList[index].id ?? 0,
+                  releaseDate: movieList[index].releaseDate ?? '',
+                  voteAverage: movieList[index].voteAverage ?? 0,
+                  posterPath: movieList[index].posterPath ?? '',
+                  overview: movieList[index].overview ?? '',
                 ),
               ),
             );

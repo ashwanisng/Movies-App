@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/view/module/genre/screen/genre_view.dart';
 import 'package:movie_app/view/module/search/data/model/genre.dart';
 
 class SearchView extends StatefulWidget {
@@ -155,12 +156,13 @@ class GenreTile extends StatelessWidget {
       padding: const EdgeInsets.all(5.0),
       child: InkWell(
         onTap: () {
-          // pushNewScreen(
-          //     context,
-          //     BlocProvider(
-          //       create: (context) => GenreResultsCubit()..init(genre.id),
-          //       child: GenreResults(query: genre.name),
-          //     ));
+           Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => GenreView(
+                genreDetails : genre
+              ),
+            ),
+          );
         },
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8),

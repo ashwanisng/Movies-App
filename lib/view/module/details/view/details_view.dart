@@ -7,13 +7,17 @@ import 'package:movie_app/view/module/details/bloc/details_bloc.dart';
 import 'package:movie_app/view/module/details/bloc/details_event.dart';
 import 'package:movie_app/view/module/details/bloc/details_state.dart';
 import 'package:movie_app/view/module/details/data/model/similar_movie_response.dart';
-import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 import 'package:movie_app/view/module/popular/view/screen/popular_view.dart';
 
 class DetailsView extends StatefulWidget {
-  final Movie detail;
+  final int movieId;
+  final String title;
+  final String releaseDate;
+  final String posterPath;
+  final String overview;
+  final num voteAverage;
 
-  const DetailsView({super.key, required this.detail});
+  const DetailsView({super.key, required this.movieId, required this.title, required this.releaseDate, required this.voteAverage, required this.posterPath, required this.overview});
 
   @override
   State<DetailsView> createState() => _DetailsViewState();
@@ -25,7 +29,7 @@ class _DetailsViewState extends State<DetailsView> {
   @override
   void initState() {
     movieDetailsBloc = BlocProvider.of<MovieDetailsBloc>(context);
-    movieDetailsBloc.add(SimilarMoviesEvent(widget.detail.id ?? 0));
+    movieDetailsBloc.add(SimilarMoviesEvent(widget.movieId ?? 0));
     super.initState();
   }
 
@@ -33,7 +37,6 @@ class _DetailsViewState extends State<DetailsView> {
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
 
-    var info = widget.detail;
     return Scaffold(
       body: SafeArea(
         top: false,
@@ -49,7 +52,7 @@ class _DetailsViewState extends State<DetailsView> {
                 elevation: 0.0,
                 flexibleSpace: FlexibleSpaceBar(
                     background: CachedNetworkImage(
-                  imageUrl: Url.imageBaseUrlW500 + (info.posterPath ?? ''),
+                  imageUrl: Url.imageBaseUrlW500 + (widget.posterPath ?? ''),
                   placeholder: (ctx, str) {
                     return Container();
                   },
@@ -71,7 +74,7 @@ class _DetailsViewState extends State<DetailsView> {
                   children: <Widget>[
                     Container(margin: const EdgeInsets.only(top: 5.0)),
                     Text(
-                      info.title ?? 'Movie',
+                      widget.title ?? 'Movie',
                       style: const TextStyle(
                         fontSize: 25.0,
                         fontWeight: FontWeight.bold,
@@ -88,7 +91,7 @@ class _DetailsViewState extends State<DetailsView> {
                           margin: const EdgeInsets.only(left: 1.0, right: 1.0),
                         ),
                         Text(
-                          info.voteAverage!.toStringAsFixed(1),
+                          widget.voteAverage.toStringAsFixed(1),
                           style: const TextStyle(
                             fontSize: 18.0,
                           ),
@@ -97,7 +100,7 @@ class _DetailsViewState extends State<DetailsView> {
                           margin: const EdgeInsets.only(left: 10.0, right: 10.0),
                         ),
                         Text(
-                          info.releaseDate ?? '-/-/-',
+                          widget.releaseDate ?? '-/-/-',
                           style: const TextStyle(
                             fontSize: 18.0,
                           ),
@@ -105,7 +108,7 @@ class _DetailsViewState extends State<DetailsView> {
                       ],
                     ),
                     Container(margin: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
-                    Text(info.overview!),
+                    Text(widget.overview),
                     Container(margin: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
                     const Text(
                       "Trailer",
@@ -123,7 +126,6 @@ class _DetailsViewState extends State<DetailsView> {
                             child: CircularProgressIndicator(),
                           );
                         }
-
                         if (state is SimilarMoviesList) {
                           debugPrint('hello :: ${state.moviesData?.length}');
                           return trailerLayout(data: state.moviesData ?? [], orientation: orientation);
@@ -159,25 +161,26 @@ Widget trailerLayout({
       childAspectRatio: 2 / 3,
     ),
     itemBuilder: (BuildContext context, int index) {
-      return trailerItem(
-        data[index],
-      );
+      return MovieCard(url: data[index].posterPath ?? '');
     },
   );
 }
 
-trailerItem(SimilarMovies? data) {
-  debugPrint('name :: ${data?.title}');
+trailerItem({
+  required String title,
+  required String posterPath,
+}) {
+  debugPrint('name :: $title');
   return Column(
     children: <Widget>[
       Expanded(
         child: Container(
           margin: const EdgeInsets.all(5.0),
-          child: MovieCard(url: data?.posterPath ?? ''),
+          child: MovieCard(url: posterPath),
         ),
       ),
       Text(
-        data?.title ?? "",
+        title,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
