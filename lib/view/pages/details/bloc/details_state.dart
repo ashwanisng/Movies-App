@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:movie_app/view/pages/details/data/model/similar_movie_response.dart';
-import 'package:movie_app/view/pages/home/data/model/movie_response.dart';
+import 'package:movie_app/view/pages/popular/data/model/movie_response.dart';
 
 abstract class DetailsState extends Equatable {
   const DetailsState();

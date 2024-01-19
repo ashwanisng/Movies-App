@@ -4,9 +4,9 @@ import 'package:movie_app/data/repository/movie_repository.dart';
 import 'package:movie_app/utils/theme/app_theme.dart';
 import 'package:movie_app/utils/values/env.dart';
 import 'package:movie_app/view/pages/details/bloc/details_bloc.dart';
-import 'package:movie_app/view/pages/home/bloc/home_bloc.dart';
-import 'package:movie_app/view/pages/home/bloc/home_event.dart';
-import 'package:movie_app/view/pages/home/view/home_view.dart';
+import 'package:movie_app/view/pages/home/home_view.dart';
+import 'package:movie_app/view/pages/popular/bloc/popular_movie_bloc.dart';
+import 'package:movie_app/view/pages/popular/bloc/popular_movie_event.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -22,9 +22,9 @@ class _AppState extends State<App> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => HomeBloc(movieRepository: _movieRepo)
+          create: (context) => PopularMoviesBloc(movieRepository: _movieRepo)
             ..add(
-              const PopularMoviesEvent(),
+              const GetPopularMoviesEvent(),
             ),
         ),
         BlocProvider(

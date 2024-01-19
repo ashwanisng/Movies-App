@@ -7,8 +7,8 @@ import 'package:movie_app/view/pages/details/bloc/details_bloc.dart';
 import 'package:movie_app/view/pages/details/bloc/details_event.dart';
 import 'package:movie_app/view/pages/details/bloc/details_state.dart';
 import 'package:movie_app/view/pages/details/data/model/similar_movie_response.dart';
-import 'package:movie_app/view/pages/home/data/model/movie_response.dart';
-import 'package:movie_app/view/pages/home/view/home_view.dart';
+import 'package:movie_app/view/pages/popular/data/model/movie_response.dart';
+import 'package:movie_app/view/pages/popular/view/screen/popular_view.dart';
 
 class DetailsView extends StatefulWidget {
   final Movie detail;
