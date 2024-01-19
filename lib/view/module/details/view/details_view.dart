@@ -6,8 +6,7 @@ import 'package:movie_app/utils/values/url.dart';
 import 'package:movie_app/view/module/details/bloc/details_bloc.dart';
 import 'package:movie_app/view/module/details/bloc/details_event.dart';
 import 'package:movie_app/view/module/details/bloc/details_state.dart';
-import 'package:movie_app/view/module/details/data/model/similar_movie_response.dart';
-import 'package:movie_app/view/module/popular/view/screen/popular_view.dart';
+import 'package:movie_app/view/widget/similar_movie_layout.dart';
 
 class DetailsView extends StatefulWidget {
   final int movieId;
@@ -128,10 +127,13 @@ class _DetailsViewState extends State<DetailsView> {
                         }
                         if (state is SimilarMoviesList) {
                           debugPrint('hello :: ${state.moviesData?.length}');
-                          return trailerLayout(data: state.moviesData ?? [], orientation: orientation);
+                          return SimilarMovieLayout(
+                            data: state.moviesData ?? [],
+                            orientation: orientation,
+                          );
                         } else {
                           debugPrint('no hello');
-                          return noTrailer();
+                          return const Center(child: Text("No trailer available"));
                         }
                       },
                     ),
@@ -146,50 +148,3 @@ class _DetailsViewState extends State<DetailsView> {
   }
 }
 
-Widget trailerLayout({
-  required List<SimilarMovies> data,
-  required Orientation orientation,
-}) {
-  return GridView.builder(
-    itemCount: data.length,
-    shrinkWrap: true,
-    physics: const NeverScrollableScrollPhysics(),
-    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
-      crossAxisSpacing: 5,
-      mainAxisSpacing: 5,
-      childAspectRatio: 2 / 3,
-    ),
-    itemBuilder: (BuildContext context, int index) {
-      return MovieCard(url: data[index].posterPath ?? '');
-    },
-  );
-}
-
-trailerItem({
-  required String title,
-  required String posterPath,
-}) {
-  debugPrint('name :: $title');
-  return Column(
-    children: <Widget>[
-      Expanded(
-        child: Container(
-          margin: const EdgeInsets.all(5.0),
-          child: MovieCard(url: posterPath),
-        ),
-      ),
-      Text(
-        title,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-    ],
-  );
-}
-
-Widget noTrailer() {
-  return const Center(
-    child: Text("No trailer available"),
-  );
-}

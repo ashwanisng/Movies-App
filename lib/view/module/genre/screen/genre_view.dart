@@ -60,7 +60,7 @@ class _GenreViewState extends State<GenreView> {
                   return GestureDetector(
                     child: MovieCard(url: data[index].posterPath ?? ''),
                     onTap: () {
-                       Navigator.of(context).push(
+                      Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => DetailsView(
                             title: data[index].title ?? '',
@@ -77,8 +77,7 @@ class _GenreViewState extends State<GenreView> {
                 },
               );
             } else {
-              debugPrint('no hello');
-              return noTrailer();
+              return const Center(child: Text("No trailer available"));
             }
           },
         ),

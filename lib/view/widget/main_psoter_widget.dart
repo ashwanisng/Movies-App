@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/utils/values/url.dart';
 import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 
-class SimilarMoviesWidget extends StatelessWidget {
+class MainPosterWidget extends StatelessWidget {
   final Size size;
   final Movie recommendedMovie;
-  const SimilarMoviesWidget({super.key, required this.size, required this.recommendedMovie});
+  const MainPosterWidget({super.key, required this.size, required this.recommendedMovie});
 
   @override
   Widget build(BuildContext context) {

@@ -6,10 +6,10 @@ import 'package:movie_app/utils/theme/app_colors.dart';
 import 'package:movie_app/utils/values/url.dart';
 import 'package:movie_app/utils/widgets/custom_app_bar.dart';
 import 'package:movie_app/utils/widgets/error_widget.dart';
-import 'package:movie_app/utils/widgets/similar_movies_widget.dart';
 import 'package:movie_app/view/module/popular/bloc/popular_movie_bloc.dart';
 import 'package:movie_app/view/module/popular/bloc/popular_movie_state.dart';
 import 'package:movie_app/view/module/popular/view/widget/build_list_widget.dart';
+import 'package:movie_app/view/widget/main_psoter_widget.dart';
 
 class PopularMoviesView extends StatefulWidget {
   const PopularMoviesView({super.key});
@@ -52,7 +52,7 @@ class _PopularMoviesViewState extends State<PopularMoviesView> {
                 return ListView(
                   physics: const BouncingScrollPhysics(),
                   children: [
-                    SimilarMoviesWidget(size: size, recommendedMovie: state.moviesData![0]),
+                    MainPosterWidget(size: size, recommendedMovie: state.moviesData![0]),
                     const SizedBox(height: 30),
                     BuildListWidget(movieList: state.moviesData ?? [], orientation: orientation),
                   ],
