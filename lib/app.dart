@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/utils/theme/app_theme.dart';
 import 'package:movie_app/utils/values/env.dart';
-import 'package:movie_app/view/pages/home/home_view.dart';
+import 'package:movie_app/view/pages/home/view/home_view.dart';
 
 class App extends StatefulWidget {
   const App({super.key});

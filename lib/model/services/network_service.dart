@@ -51,7 +51,8 @@ class NetworkService {
         queryParameters: query,
         options: Options(headers: {
           'Content-type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'Authorization': "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDQxMWRhZmJiYmYwYjk5ZjRiZjg4NzA4OGViMGY3ZSIsInN1YiI6IjY1YThlMDNhNmY5NzQ2MDEyZWQ4ZmI2ZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Nk03GocXafJENJru8LHd4P0Th8i08Fu2z4DPWebi0_U",
         }),
       );
       debugPrint('====== ${response.statusCode} =====');
@@ -129,8 +130,7 @@ class NetworkService {
     Map<String, dynamic>? data,
   }) async {
     try {
-      final response =
-          await _dio.delete(path, queryParameters: query, data: data);
+      final response = await _dio.delete(path, queryParameters: query, data: data);
       return response.data;
     } on Exception catch (error, stack) {
       return ExceptionHandler.handleError(error);
