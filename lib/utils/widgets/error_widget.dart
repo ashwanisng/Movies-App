@@ -15,7 +15,7 @@ Widget errorWidget(Size size, BuildContext context) {
           height: 20,
         ),
         Text("Error in data loading",
-            style: Theme.of(context).textTheme.headline5),
+            style: Theme.of(context).textTheme.headlineSmall),
       ],
     ),
   );

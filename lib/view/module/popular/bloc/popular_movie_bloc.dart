@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/data/repository/movie_repository.dart';
 import 'package:movie_app/data/response/response.dart';
-import 'package:movie_app/view/pages/popular/data/model/movie_response.dart';
-import 'package:movie_app/view/pages/popular/bloc/popular_movie_event.dart';
-import 'package:movie_app/view/pages/popular/bloc/popular_movie_state.dart';
+import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
+import 'package:movie_app/view/module/popular/bloc/popular_movie_event.dart';
+import 'package:movie_app/view/module/popular/bloc/popular_movie_state.dart';
 
 class PopularMoviesBloc extends Bloc<PopularMovieEvent, PopularMoviesState> {
   final MovieRepository _movieRepository;

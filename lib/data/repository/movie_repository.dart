@@ -3,8 +3,8 @@ import 'package:movie_app/data/response/response.dart';
 import 'package:movie_app/model/services/network_service.dart';
 import 'package:movie_app/utils/helper/exception_handler.dart';
 import 'package:movie_app/utils/values/url.dart';
-import 'package:movie_app/view/pages/details/data/model/similar_movie_response.dart';
-import 'package:movie_app/view/pages/popular/data/model/movie_response.dart';
+import 'package:movie_app/view/module/details/data/model/similar_movie_response.dart';
+import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 
 class MovieRepository {
   NetworkService controller = NetworkService();

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/data/repository/movie_repository.dart';
 import 'package:movie_app/data/response/response.dart';
-import 'package:movie_app/view/pages/details/bloc/details_event.dart';
-import 'package:movie_app/view/pages/details/bloc/details_state.dart';
-import 'package:movie_app/view/pages/details/data/model/similar_movie_response.dart';
+import 'package:movie_app/view/module/details/bloc/details_event.dart';
+import 'package:movie_app/view/module/details/bloc/details_state.dart';
+import 'package:movie_app/view/module/details/data/model/similar_movie_response.dart';
 
 class MovieDetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   final MovieRepository _movieRepository;

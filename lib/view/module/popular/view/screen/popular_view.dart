@@ -7,9 +7,9 @@ import 'package:movie_app/utils/values/url.dart';
 import 'package:movie_app/utils/widgets/custom_app_bar.dart';
 import 'package:movie_app/utils/widgets/error_widget.dart';
 import 'package:movie_app/utils/widgets/similar_movies_widget.dart';
-import 'package:movie_app/view/pages/popular/bloc/popular_movie_bloc.dart';
-import 'package:movie_app/view/pages/popular/bloc/popular_movie_state.dart';
-import 'package:movie_app/view/pages/popular/view/widget/build_list_widget.dart';
+import 'package:movie_app/view/module/popular/bloc/popular_movie_bloc.dart';
+import 'package:movie_app/view/module/popular/bloc/popular_movie_state.dart';
+import 'package:movie_app/view/module/popular/view/widget/build_list_widget.dart';
 
 class PopularMoviesView extends StatefulWidget {
   const PopularMoviesView({super.key});

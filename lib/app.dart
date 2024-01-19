@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/data/repository/movie_repository.dart';
 import 'package:movie_app/utils/theme/app_theme.dart';
 import 'package:movie_app/utils/values/env.dart';
-import 'package:movie_app/view/pages/details/bloc/details_bloc.dart';
-import 'package:movie_app/view/pages/home/home_view.dart';
-import 'package:movie_app/view/pages/popular/bloc/popular_movie_bloc.dart';
-import 'package:movie_app/view/pages/popular/bloc/popular_movie_event.dart';
+import 'package:movie_app/view/module/details/bloc/details_bloc.dart';
+import 'package:movie_app/view/module/home/home_view.dart';
+import 'package:movie_app/view/module/popular/bloc/popular_movie_bloc.dart';
+import 'package:movie_app/view/module/popular/bloc/popular_movie_event.dart';
 
 class App extends StatefulWidget {
   const App({super.key});

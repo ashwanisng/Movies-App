@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/view/pages/details/view/details_view.dart';
-import 'package:movie_app/view/pages/popular/data/model/movie_response.dart';
-import 'package:movie_app/view/pages/popular/view/screen/popular_view.dart';
+import 'package:movie_app/view/module/details/view/details_view.dart';
+import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
+import 'package:movie_app/view/module/popular/view/screen/popular_view.dart';
 
 class BuildListWidget extends StatelessWidget {
   final List<Movie> movieList;

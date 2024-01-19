@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/utils/theme/app_colors.dart';
 import 'package:movie_app/utils/values/url.dart';
-import 'package:movie_app/view/pages/details/bloc/details_bloc.dart';
-import 'package:movie_app/view/pages/details/bloc/details_event.dart';
-import 'package:movie_app/view/pages/details/bloc/details_state.dart';
-import 'package:movie_app/view/pages/details/data/model/similar_movie_response.dart';
-import 'package:movie_app/view/pages/popular/data/model/movie_response.dart';
-import 'package:movie_app/view/pages/popular/view/screen/popular_view.dart';
+import 'package:movie_app/view/module/details/bloc/details_bloc.dart';
+import 'package:movie_app/view/module/details/bloc/details_event.dart';
+import 'package:movie_app/view/module/details/bloc/details_state.dart';
+import 'package:movie_app/view/module/details/data/model/similar_movie_response.dart';
+import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
+import 'package:movie_app/view/module/popular/view/screen/popular_view.dart';
 
 class DetailsView extends StatefulWidget {
   final Movie detail;

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/utils/values/url.dart';
-import 'package:movie_app/view/pages/popular/data/model/movie_response.dart';
+import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 
 class SimilarMoviesWidget extends StatelessWidget {
   final Size size;

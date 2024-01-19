@@ -57,7 +57,7 @@ class NetworkService {
       );
       debugPrint('====== ${response.statusCode} =====');
       return response.data;
-    } on Exception catch (error, stack) {
+    } on Exception catch (error) {
       return ExceptionHandler.handleError(error);
     }
   }
@@ -80,7 +80,7 @@ class NetworkService {
 
       debugPrint('response : ${response.data}');
       return response.data;
-    } on DioException catch (error, stack) {
+    } on DioException catch (error) {
       debugPrint('error : ${error.message}');
       return ExceptionHandler.handleError(error);
     }
@@ -105,7 +105,7 @@ class NetworkService {
 
       debugPrint('response : ${response.data}');
       return response.data;
-    } on DioException catch (error, stack) {
+    } on DioException catch (error) {
       debugPrint('error : ${error.message}');
       return ExceptionHandler.handleError(error);
     }
@@ -119,7 +119,7 @@ class NetworkService {
     try {
       final response = await _dio.put(path, queryParameters: query, data: data);
       return response.data;
-    } on Exception catch (error, stack) {
+    } on Exception catch (error) {
       return ExceptionHandler.handleError(error);
     }
   }
@@ -132,7 +132,7 @@ class NetworkService {
     try {
       final response = await _dio.delete(path, queryParameters: query, data: data);
       return response.data;
-    } on Exception catch (error, stack) {
+    } on Exception catch (error) {
       return ExceptionHandler.handleError(error);
     }
   }
