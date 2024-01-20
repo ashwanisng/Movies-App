@@ -31,12 +31,12 @@ class SearchRepository {
         : RepoResponse(data: data);
   }
 
-  Future<RepoResponse<MovieResponse>> searchMovies(String value) async {
+  Future<RepoResponse<MovieResponse>> searchMovies(String value, int page) async {
     final response = await controller.get(
       path: Url.genre,
       query: {
         'language': 'en-US',
-        'page': '1',
+        'page': page.toString(),
         'include_adult': true,
         'sort_by': 'popularity.desc',
         'query': value,

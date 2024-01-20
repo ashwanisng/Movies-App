@@ -1,16 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/utils/helper/debounce.dart';
-import 'package:movie_app/view/module/details/view/details_view.dart';
 import 'package:movie_app/view/module/genre/screen/genre_view.dart';
-import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 import 'package:movie_app/view/module/search/bloc/search_bloc.dart';
-import 'package:movie_app/view/module/search/bloc/search_event.dart';
-import 'package:movie_app/view/module/search/bloc/search_state.dart';
 import 'package:movie_app/view/module/search/data/model/genre.dart';
 import 'package:movie_app/view/module/search/screen/search_results.dart';
-import 'package:movie_app/view/widget/movie_card_widget.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({super.key});
@@ -52,7 +46,13 @@ class _SearchViewState extends State<SearchView> {
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: TextField(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const SearchResults(searchResultList: [])),
+                  );
+                },
                 keyboardType: TextInputType.text,
+                readOnly: true,
                 decoration: InputDecoration(
                   suffixIcon: Icon(
                     Icons.search,
@@ -88,41 +88,8 @@ class _SearchViewState extends State<SearchView> {
                     ),
                   ),
                 ),
-                // onChanged: (String value) {
-                //   EasyDebounce.debounce(
-                //     'search',
-                //     const Duration(milliseconds: 300),
-                //     () {
-                //       searchMovieBloc.add(LoadSearchEvent(query: value));
-                //     },
-                //   );
-                // },
-
-                onSubmitted: (value) {
-                  if (value.isNotEmpty) {
-                    EasyDebounce.debounce(
-                      'search',
-                      const Duration(milliseconds: 300),
-                      () {
-                        searchMovieBloc.add(LoadSearchEvent(query: value));
-                      },
-                    );
-                  }
-                },
-
                 controller: searchController,
               ),
-            ),
-            BlocListener<SearchMovieBloc, SearchMovieState>(
-              bloc: searchMovieBloc,
-              listener: (context, state) {
-                if (state is SearchSuccess) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => SearchResults(searchResultList: state.moviesData ?? [])),
-                  );
-                }
-              },
-              child: Container(),
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
@@ -181,41 +148,6 @@ class _SearchViewState extends State<SearchView> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget searchResult({required List<MovieDetails> searchList, required Orientation orientation}) {
-    return ListView(
-      children: [
-        const Padding(
-          padding: EdgeInsets.only(left: 10.0, top: 20.0, bottom: 20.0),
-          child: Text(
-            'Top Results',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
-        ),
-        GridView.builder(
-          itemCount: searchList.length,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: orientation == Orientation.portrait ? 3 : 6, crossAxisSpacing: 5, mainAxisSpacing: 5, childAspectRatio: 2 / 3),
-          itemBuilder: (BuildContext context, int index) {
-            var data = searchList[index];
-            return InkResponse(
-              enableFeedback: true,
-              child: MovieCard(url: searchList[index].posterPath ?? ''),
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => DetailsView(movieDetails: data),
-                ),
-              ),
-            );
-          },
-        )
-      ],
     );
   }
 }

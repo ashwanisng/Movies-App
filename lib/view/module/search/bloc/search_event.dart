@@ -7,7 +7,4 @@ abstract class SearchMovieEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadSearchEvent extends SearchMovieEvent {
-  String query;
-  LoadSearchEvent({required this.query});
-}
+class LoadSearchEvent extends SearchMovieEvent {}

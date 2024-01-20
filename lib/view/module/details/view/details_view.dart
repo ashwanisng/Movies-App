@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/utils/storage_utils.dart';
+import 'package:hive/hive.dart';
 import 'package:movie_app/utils/theme/app_colors.dart';
 import 'package:movie_app/utils/values/url.dart';
 import 'package:movie_app/view/module/details/bloc/details_bloc.dart';
@@ -22,14 +22,20 @@ class DetailsView extends StatefulWidget {
 class _DetailsViewState extends State<DetailsView> {
   late MovieDetailsBloc movieDetailsBloc;
   late bool addedToFav;
+  var box = Hive.box('fav');
 
   @override
   void initState() {
     movieDetailsBloc = BlocProvider.of<MovieDetailsBloc>(context);
     movieDetailsBloc.add(SimilarMoviesEvent(widget.movieDetails.id ?? 0));
-    MovieDetails? data = StorageUtils.getMovieData();
-    addedToFav = data?.fav ?? false;
-    debugPrint('true hai kya?? ${data?.fav}');
+    // var data = box.get('movieList') as List<MovieDetails>;
+
+    if (box.get('movieList')?.isNotEmpty ?? false) {
+      addedToFav = box.get('movieList')?.map((e) => e.id).contains(widget.movieDetails.id) ?? false;
+    } else {
+      addedToFav = false;
+    }
+    // addedToFav = false;
     super.initState();
   }
 
@@ -112,15 +118,18 @@ class _DetailsViewState extends State<DetailsView> {
                         IconButton(
                           onPressed: () {
                             setState(() {
-                              addedToFav = !addedToFav;
-
-                              widget.movieDetails.fav = addedToFav;
+                              // List<MovieDetails> data = box.get('movieList') ?? <MovieDetails>[];
 
                               if (addedToFav) {
-                                StorageUtils.setMovieData(widget.movieDetails);
+                                box.get('movieList').removeWhere((element) => element.id == widget.movieDetails.id);
                               } else {
-                                StorageUtils.remove('movieData');
+                                box.get('movieList').add(widget.movieDetails);
                               }
+
+                              box.put('movieList', box.get('movieList'));
+
+                              // StorageUtils.setMovieData(data);
+                              addedToFav = !addedToFav;
                             });
                           },
                           icon: Icon(!addedToFav ? Icons.add : Icons.check),

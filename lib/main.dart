@@ -11,6 +11,7 @@ void main() async {
   await Hive.initFlutter(dir.path);
   Hive.registerAdapter(MovieResponseAdapter());
   Hive.registerAdapter(MovieDetailsAdapter());
-  StorageUtils.initHive();
+  await Hive.openBox('fav');
+  // StorageUtils.initHive();
   runApp(const App());
 }

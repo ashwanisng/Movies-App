@@ -8,7 +8,10 @@ abstract class SearchMovieState extends Equatable {
   List<Object> get props => [];
 }
 
-class SearchMovieInitial extends SearchMovieState {}
+class SearchMovieInitial extends SearchMovieState {
+  final bool firstTime;
+  const SearchMovieInitial({this.firstTime = false});
+}
 
 class SearchLoading extends SearchMovieState {}
 
@@ -17,4 +20,7 @@ class SearchSuccess extends SearchMovieState {
   SearchSuccess({this.moviesData});
 }
 
-class SearchError extends SearchMovieState {}
+class SearchError extends SearchMovieState {
+  String msg;
+  SearchError({required this.msg});
+}
