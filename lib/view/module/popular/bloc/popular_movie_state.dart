@@ -1,11 +1,7 @@
-import 'package:equatable/equatable.dart';
 import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 
-abstract class PopularMoviesState extends Equatable {
+abstract class PopularMoviesState {
   const PopularMoviesState();
-
-  @override
-  List<Object> get props => [];
 }
 
 class PopularMovieInitial extends PopularMoviesState {}

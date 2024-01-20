@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/view/module/details/data/model/similar_movie_response.dart';
+import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 import 'package:movie_app/view/widget/movie_card_widget.dart';
 
 class SimilarMovieLayout extends StatelessWidget {
-  final List<SimilarMovies> data;
+  final List<MovieDetails> data;
   final Orientation orientation;
   const SimilarMovieLayout({super.key, required this.data, required this.orientation});
 

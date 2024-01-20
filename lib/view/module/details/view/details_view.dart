@@ -29,6 +29,7 @@ class _DetailsViewState extends State<DetailsView> {
   void initState() {
     movieDetailsBloc = BlocProvider.of<MovieDetailsBloc>(context);
     movieDetailsBloc.add(SimilarMoviesEvent(widget.movieDetails.id ?? 0));
+    movieDetailsBloc.scrollController.addListener(_onScroll);
 
     if (box.get('movieList')?.isNotEmpty ?? false) {
       addedToFav = box.get('movieList')?.map((e) => e.id).contains(widget.movieDetails.id) ?? false;
@@ -36,6 +37,28 @@ class _DetailsViewState extends State<DetailsView> {
       addedToFav = false;
     }
     super.initState();
+  }
+
+  void _onScroll() {
+    if (_isBottom && movieDetailsBloc.canLoadMore && !movieDetailsBloc.loadingMore) {
+      movieDetailsBloc.pageNo++;
+      movieDetailsBloc.add(SimilarMoviesEvent(widget.movieDetails.id ?? 0));
+    }
+  }
+
+  bool get _isBottom {
+    if (!movieDetailsBloc.scrollController.hasClients) {
+      return false;
+    }
+    final maxScroll = movieDetailsBloc.scrollController.position.maxScrollExtent;
+    final currentScroll = movieDetailsBloc.scrollController.offset;
+    return currentScroll >= (maxScroll * 0.85);
+  }
+
+  @override
+  void dispose() {
+    movieDetailsBloc.scrollController.removeListener(_onScroll);
+    super.dispose();
   }
 
   @override
@@ -72,6 +95,7 @@ class _DetailsViewState extends State<DetailsView> {
           },
           body: ListView(
             physics: const BouncingScrollPhysics(),
+            controller: movieDetailsBloc.scrollController,
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -155,7 +179,6 @@ class _DetailsViewState extends State<DetailsView> {
                             orientation: orientation,
                           );
                         } else {
-                          debugPrint('no hello');
                           return Center(
                             child: Text("No trailer available", style: Styles.h5),
                           );

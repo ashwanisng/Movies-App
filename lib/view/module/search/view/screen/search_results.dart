@@ -86,7 +86,7 @@ class _SearchResultsState extends State<SearchResults> {
                       vertical: 0,
                       horizontal: 20,
                     ),
-                     hintStyle: Styles.h5,
+                    hintStyle: Styles.h5,
                     fillColor: Colors.white.withOpacity(.1),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -136,6 +136,7 @@ class _SearchResultsState extends State<SearchResults> {
                     if (state.moviesData?.isEmpty ?? false) {
                       return const Center(child: Text('No result found!'));
                     } else {
+                      debugPrint('yha len :: ${state.moviesData?.length}');
                       return GridView.builder(
                         itemCount: (state.moviesData!.length + 1) ?? 0,
                         shrinkWrap: true,

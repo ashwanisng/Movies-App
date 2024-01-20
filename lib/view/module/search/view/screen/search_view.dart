@@ -22,7 +22,6 @@ class _SearchViewState extends State<SearchView> {
   @override
   void initState() {
     searchMovieBloc = BlocProvider.of<SearchMovieBloc>(context);
-    // searchMovieBloc.add(LoadSearchEvent(query: ''));
     super.initState();
   }
 
@@ -55,6 +54,7 @@ class _SearchViewState extends State<SearchView> {
                 },
                 keyboardType: TextInputType.text,
                 readOnly: true,
+                style: Styles.h5,
                 decoration: InputDecoration(
                   suffixIcon: Icon(
                     Icons.search,

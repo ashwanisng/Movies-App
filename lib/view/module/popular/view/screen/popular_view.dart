@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/utils/theme/app_colors.dart';
 import 'package:movie_app/utils/widgets/error_widget.dart';
+import 'package:movie_app/view/module/details/view/details_view.dart';
 import 'package:movie_app/view/module/popular/bloc/popular_movie_bloc.dart';
 import 'package:movie_app/view/module/popular/bloc/popular_movie_event.dart';
 import 'package:movie_app/view/module/popular/bloc/popular_movie_state.dart';
@@ -29,7 +30,6 @@ class _PopularMoviesViewState extends State<PopularMoviesView> {
   }
 
   void _onScroll() {
-    debugPrint('hhhhhhhhh');
     if (_isBottom && homeBloc.canLoadMore && !homeBloc.loadingMore) {
       homeBloc.pageNo++;
       homeBloc.add(const GetPopularMoviesEvent());
@@ -68,11 +68,22 @@ class _PopularMoviesViewState extends State<PopularMoviesView> {
               );
             }
             if (state is PopularMoviesSuccessList) {
+              int index = Random().nextInt((state.moviesData?.length ?? 0) - 0);
               return ListView(
                 controller: homeBloc.scrollController,
                 physics: const BouncingScrollPhysics(),
                 children: [
-                  MainPosterWidget(size: size, recommendedMovie: state.moviesData![Random().nextInt((state.moviesData?.length ?? 0) - 0)]),
+                  MainPosterWidget(
+                    size: size,
+                    recommendedMovie: state.moviesData![index],
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => DetailsView(movieDetails: state.moviesData![index]),
+                        ),
+                      );
+                    },
+                  ),
                   const SizedBox(height: 30),
                   BuildListWidget(
                     movieList: state.moviesData ?? [],

@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:movie_app/data/response/response.dart';
 import 'package:movie_app/model/services/network_service.dart';
 import 'package:movie_app/utils/helper/exception_handler.dart';
 import 'package:movie_app/utils/values/url.dart';
-import 'package:movie_app/view/module/details/data/model/similar_movie_response.dart';
 import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 
 class MovieRepository {
@@ -20,27 +18,17 @@ class MovieRepository {
 
     MovieResponse data = MovieResponse.fromJson(response);
 
-    return response is APIException
-        ? RepoResponse(
-            error: APIException(message: 'Something went wrong!'),
-          )
-        : RepoResponse(data: data);
+    return response is APIException ? RepoResponse(error: APIException(message: 'Something went wrong!')) : RepoResponse(data: data);
   }
 
-  Future<RepoResponse<SimilarMovieResponse>> getSimilarMovies(int movieId) async {
+  Future<RepoResponse<MovieResponse>> getSimilarMovies(int movieId, int pageNo) async {
     final response = await controller.get(
       path: Url.similarMovies(movieId),
-      query: {'language': 'en-US', 'page': '1'},
+      query: {'language': 'en-US', 'page': pageNo.toString()},
     );
 
-    SimilarMovieResponse data = SimilarMovieResponse.fromJson(response);
+    MovieResponse data = MovieResponse.fromJson(response);
 
-    debugPrint('response :: ${data.similarMovies?.length}');
-
-    return response is APIException
-        ? RepoResponse(
-            error: APIException(message: 'Something went wrong!'),
-          )
-        : RepoResponse(data: data);
+    return response is APIException ? RepoResponse(error: APIException(message: 'Something went wrong!')) : RepoResponse(data: data);
   }
 }

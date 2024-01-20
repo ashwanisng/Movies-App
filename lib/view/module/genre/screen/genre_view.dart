@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/utils/theme/app_colors.dart';
+import 'package:movie_app/utils/theme/styles.dart';
 import 'package:movie_app/view/module/details/view/details_view.dart';
 import 'package:movie_app/view/module/genre/bloc/genre_bloc.dart';
 import 'package:movie_app/view/module/genre/bloc/genre_event.dart';
@@ -30,9 +32,12 @@ class _GenreViewState extends State<GenreView> {
     Orientation orientation = MediaQuery.of(context).orientation;
 
     return Scaffold(
+      backgroundColor: AppColors.primaryColor,
       appBar: AppBar(
-        title: Text(widget.genreDetails.name ?? ""),
+        title: Text(widget.genreDetails.name ?? "", style: Styles.h4),
         centerTitle: true,
+        backgroundColor: AppColors.primaryColor,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: SingleChildScrollView(
         child: BlocBuilder<GenreBloc, GenreState>(

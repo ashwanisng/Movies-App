@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:movie_app/view/module/details/data/model/similar_movie_response.dart';
+import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 
 abstract class DetailsState extends Equatable {
   const DetailsState();
@@ -15,10 +15,8 @@ class LoadingState extends DetailsState {
 }
 
 class SimilarMoviesList extends DetailsState {
-  List<SimilarMovies>? moviesData;
-  SimilarMoviesList({
-    this.moviesData,
-  });
+  List<MovieDetails>? moviesData;
+  SimilarMoviesList({this.moviesData});
 }
 
 class SimilarMovieError extends DetailsState {
