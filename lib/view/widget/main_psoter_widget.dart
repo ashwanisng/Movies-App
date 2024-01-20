@@ -4,6 +4,7 @@ import 'package:movie_app/utils/theme/app_colors.dart';
 import 'package:movie_app/utils/theme/styles.dart';
 import 'package:movie_app/utils/values/url.dart';
 import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
+import 'package:movie_app/view/widget/shimmer.dart';
 
 class MainPosterWidget extends StatelessWidget {
   final Size size;
@@ -26,6 +27,12 @@ class MainPosterWidget extends StatelessWidget {
                 imageUrl: Url.imageBaseUrlW400 + recommendedMovie.posterPath!,
                 width: size.width,
                 fit: BoxFit.cover,
+                placeholder: (ctx, str) {
+                  return ShimmerWidget(size: MediaQuery.of(context).size, height: 200, radius: 0.0);
+                },
+                errorWidget: (ctx, str, dynamic) {
+                  return const Icon(Icons.error);
+                },
               ),
             ),
             Align(

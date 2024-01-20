@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/utils/theme/styles.dart';
 import 'package:movie_app/view/module/genre/screen/genre_view.dart';
 import 'package:movie_app/view/module/search/data/model/genre.dart';
+import 'package:movie_app/view/widget/shimmer.dart';
 
 class GenreTile extends StatelessWidget {
   final Genres genre;
@@ -44,6 +45,12 @@ class GenreTile extends StatelessWidget {
                         borderRadius: BorderRadius.circular(4),
                         child: CachedNetworkImage(
                           imageUrl: genre.image ?? '',
+                          placeholder: (ctx, str) {
+                            return ShimmerWidget(size: MediaQuery.of(context).size, height: 200, radius: 0.0);
+                          },
+                          errorWidget: (ctx, str, dynamic) {
+                            return const Icon(Icons.error);
+                          },
                           fit: BoxFit.cover,
                           width: 60,
                           height: 75,
