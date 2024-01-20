@@ -24,7 +24,6 @@ class _SearchResultsState extends State<SearchResults> {
   SearchMovieBloc searchMovieBloc = SearchMovieBloc(searchRepository: SearchRepository());
 
   void _onScroll() {
-    debugPrint('hhhhhhhhh');
     if (_isBottom && searchMovieBloc.canLoadMore && !searchMovieBloc.loadingMore) {
       searchMovieBloc.pageNo++;
       searchMovieBloc.add(LoadSearchEvent());
@@ -54,11 +53,12 @@ class _SearchResultsState extends State<SearchResults> {
 
   @override
   Widget build(BuildContext context) {
-    Orientation orientation = MediaQuery.of(context).orientation;
-
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
-      appBar: AppBar(),
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: AppColors.primaryColor,
+      ),
       body: SingleChildScrollView(
         controller: searchMovieBloc.scrollController,
         child: Expanded(
@@ -75,6 +75,7 @@ class _SearchResultsState extends State<SearchResults> {
                   keyboardType: TextInputType.text,
                   readOnly: false,
                   autofocus: true,
+                  style: Styles.h4,
                   decoration: InputDecoration(
                     suffixIcon: Icon(
                       Icons.search,
@@ -136,7 +137,6 @@ class _SearchResultsState extends State<SearchResults> {
                     if (state.moviesData?.isEmpty ?? false) {
                       return const Center(child: Text('No result found!'));
                     } else {
-                      debugPrint('yha len :: ${state.moviesData?.length}');
                       return GridView.builder(
                         itemCount: (state.moviesData!.length + 1) ?? 0,
                         shrinkWrap: true,
@@ -174,7 +174,11 @@ class _SearchResultsState extends State<SearchResults> {
                   if (state is SearchError) {
                     return Text(state.msg.toString());
                   }
-                  return const Center(child: CircularProgressIndicator());
+                  if (state is SearchLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  return const SizedBox();
                 },
               ),
             ],

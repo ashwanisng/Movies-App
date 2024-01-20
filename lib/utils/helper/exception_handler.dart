@@ -10,16 +10,11 @@ class APIException implements Exception {
 
 class ExceptionHandler {
   ExceptionHandler._privateConstructor();
-  // final UserRepository _userRepository = UserRepository();
 
   static APIException handleError(Exception error) {
     if (error is DioException) {
-      if (error.response?.statusCode == 503 ||
-          error.response?.statusCode == 500 ||
-          error.response?.statusCode == 404 ||
-          error.response?.statusCode == 403) {
-        return HandleError.handleError(
-            APIException(message: 'Service Unavailable'));
+      if (error.response?.statusCode == 503 || error.response?.statusCode == 500 || error.response?.statusCode == 404 || error.response?.statusCode == 403) {
+        return HandleError.handleError(APIException(message: 'Service Unavailable'));
       }
       switch (error.type) {
         case DioExceptionType.sendTimeout:
@@ -42,6 +37,5 @@ class HandleError {
 
   static handleError(APIException? error) {
     debugPrint('APIException: ${error?.message}');
-    // Get.rawSnackbar(message: error?.message ?? ErrorMessages.networkGeneral);
   }
 }

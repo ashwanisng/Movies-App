@@ -18,7 +18,11 @@ class MovieRepository {
 
     MovieResponse data = MovieResponse.fromJson(response);
 
-    return response is APIException ? RepoResponse(error: APIException(message: 'Something went wrong!')) : RepoResponse(data: data);
+    return response is APIException
+        ? RepoResponse(
+            error: APIException(message: 'Something went wrong!')
+          )
+        : RepoResponse(data: data);
   }
 
   Future<RepoResponse<MovieResponse>> getSimilarMovies(int movieId, int pageNo) async {

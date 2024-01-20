@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -60,93 +59,5 @@ class NetworkService {
     } on Exception catch (error) {
       return ExceptionHandler.handleError(error);
     }
-  }
-
-  Future<dynamic> postWithoutAuth({
-    required String path,
-    Map<String, dynamic>? query,
-    Map<String, dynamic>? data,
-  }) async {
-    try {
-      final response = await _dio.post(
-        path,
-        queryParameters: query,
-        data: data,
-        options: Options(headers: {
-          HttpHeaders.contentTypeHeader: "application/json",
-          'Accept': 'application/json',
-        }),
-      );
-
-      debugPrint('response : ${response.data}');
-      return response.data;
-    } on DioException catch (error) {
-      debugPrint('error : ${error.message}');
-      return ExceptionHandler.handleError(error);
-    }
-  }
-
-  Future<dynamic> post({
-    required String path,
-    Map<String, dynamic>? query,
-    Map<String, dynamic>? data,
-  }) async {
-    try {
-      final response = await _dio.post(
-        path,
-        queryParameters: query,
-        data: data,
-        options: Options(headers: {
-          HttpHeaders.contentTypeHeader: "application/json",
-          'Accept': 'application/json',
-          // HttpHeaders.authorizationHeader: 'Bearer ${StorageService.getUser().accessToken}'
-        }),
-      );
-
-      debugPrint('response : ${response.data}');
-      return response.data;
-    } on DioException catch (error) {
-      debugPrint('error : ${error.message}');
-      return ExceptionHandler.handleError(error);
-    }
-  }
-
-  Future<dynamic> put({
-    required String path,
-    Map<String, dynamic>? query,
-    Map<String, dynamic>? data,
-  }) async {
-    try {
-      final response = await _dio.put(path, queryParameters: query, data: data);
-      return response.data;
-    } on Exception catch (error) {
-      return ExceptionHandler.handleError(error);
-    }
-  }
-
-  Future<dynamic> delete({
-    required String path,
-    Map<String, dynamic>? query,
-    Map<String, dynamic>? data,
-  }) async {
-    try {
-      final response = await _dio.delete(path, queryParameters: query, data: data);
-      return response.data;
-    } on Exception catch (error) {
-      return ExceptionHandler.handleError(error);
-    }
-  }
-
-  Future<Response<dynamic>> _retry(RequestOptions requestOptions) async {
-    final options = Options(
-      method: requestOptions.method,
-      headers: requestOptions.headers,
-    );
-    return _dio.request<dynamic>(
-      requestOptions.path,
-      data: requestOptions.data,
-      queryParameters: requestOptions.queryParameters,
-      options: options,
-    );
   }
 }
