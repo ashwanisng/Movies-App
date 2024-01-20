@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/view/module/details/view/details_view.dart';
-import 'package:movie_app/view/module/popular/view/screen/popular_view.dart';
 import 'package:movie_app/view/module/search/data/model/genre_response.dart';
+import 'package:movie_app/view/widget/movie_card_widget.dart';
 
 class SearchResults extends StatefulWidget {
   final List<GenreDetails>? searchResultList;

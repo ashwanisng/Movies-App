@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/view/module/details/view/details_view.dart';
 import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
-import 'package:movie_app/view/module/popular/view/screen/popular_view.dart';
+import 'package:movie_app/view/widget/movie_card_widget.dart';
 
 class BuildListWidget extends StatelessWidget {
   final List<Movie> movieList;
@@ -27,7 +27,7 @@ class BuildListWidget extends StatelessWidget {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) =>  DetailsView(
+                builder: (context) => DetailsView(
                   title: movieList[index].title ?? '',
                   movieId: movieList[index].id ?? 0,
                   releaseDate: movieList[index].releaseDate ?? '',

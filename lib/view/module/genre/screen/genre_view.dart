@@ -4,8 +4,8 @@ import 'package:movie_app/view/module/details/view/details_view.dart';
 import 'package:movie_app/view/module/genre/bloc/genre_bloc.dart';
 import 'package:movie_app/view/module/genre/bloc/genre_event.dart';
 import 'package:movie_app/view/module/genre/bloc/genre_state.dart';
-import 'package:movie_app/view/module/popular/view/screen/popular_view.dart';
 import 'package:movie_app/view/module/search/data/model/genre.dart';
+import 'package:movie_app/view/widget/movie_card_widget.dart';
 
 class GenreView extends StatefulWidget {
   final Genres genreDetails;
