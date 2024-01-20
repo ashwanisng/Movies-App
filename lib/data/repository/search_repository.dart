@@ -30,4 +30,27 @@ class SearchRepository {
           )
         : RepoResponse(data: data);
   }
+
+  Future<RepoResponse<GenreResponse>> searchMovies(String value) async {
+    final response = await controller.get(
+      path: Url.genre,
+      query: {
+        'language': 'en-US',
+        'page': '1',
+        'include_adult': true,
+        'sort_by': 'popularity.desc',
+        'query': value,
+      },
+    );
+
+    GenreResponse data = GenreResponse.fromJson(response);
+
+    debugPrint('response :: ${data.genreDetails?.length}');
+
+    return response is APIException
+        ? RepoResponse(
+            error: APIException(message: 'Something went wrong!'),
+          )
+        : RepoResponse(data: data);
+  }
 }

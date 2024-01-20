@@ -1,7 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/utils/helper/debounce.dart';
+import 'package:movie_app/view/module/details/view/details_view.dart';
 import 'package:movie_app/view/module/genre/screen/genre_view.dart';
+import 'package:movie_app/view/module/popular/view/screen/popular_view.dart';
+import 'package:movie_app/view/module/search/bloc/search_bloc.dart';
+import 'package:movie_app/view/module/search/bloc/search_event.dart';
+import 'package:movie_app/view/module/search/bloc/search_state.dart';
 import 'package:movie_app/view/module/search/data/model/genre.dart';
+import 'package:movie_app/view/module/search/data/model/genre_response.dart';
+import 'package:movie_app/view/module/search/screen/search_results.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({super.key});
@@ -11,10 +20,20 @@ class SearchView extends StatefulWidget {
 }
 
 class _SearchViewState extends State<SearchView> {
+  TextEditingController searchController = TextEditingController();
+  final genres = GenresList.fromJson(genreslist).list;
+  late SearchMovieBloc searchMovieBloc;
+
+  @override
+  void initState() {
+    searchMovieBloc = BlocProvider.of<SearchMovieBloc>(context);
+    // searchMovieBloc.add(LoadSearchEvent(query: ''));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final genres = GenresList.fromJson(genreslist).list;
-
+    Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -70,18 +89,43 @@ class _SearchViewState extends State<SearchView> {
                     ),
                   ),
                 ),
-                onSubmitted: (query) {
-                  if (query.isNotEmpty) {
-                    // pushNewScreen(
-                    //     context,
-                    //     BlocProvider(
-                    //       create: (context) => SearchResultsCubit()..init(query),
-                    //       child: SearchResults(query: query),
-                    //     ));
+                // onChanged: (String value) {
+                //   EasyDebounce.debounce(
+                //     'search',
+                //     const Duration(milliseconds: 300),
+                //     () {
+                //       searchMovieBloc.add(LoadSearchEvent(query: value));
+                //     },
+                //   );
+                // },
+
+                onSubmitted: (value) {
+                  if (value.isNotEmpty) {
+                    EasyDebounce.debounce(
+                      'search',
+                      const Duration(milliseconds: 300),
+                      () {
+                        searchMovieBloc.add(LoadSearchEvent(query: value));
+                      },
+                    );
                   }
                 },
+
+                controller: searchController,
               ),
             ),
+            BlocListener<SearchMovieBloc, SearchMovieState>(
+              bloc: searchMovieBloc,
+              listener: (context, state) {
+                if (state is SearchSuccess) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => SearchResults(searchResultList: state.moviesData)),
+                  );
+                }
+              },
+              child: Container(),
+            ),
+            
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
               child: Text(
@@ -141,6 +185,48 @@ class _SearchViewState extends State<SearchView> {
       ),
     );
   }
+
+  Widget searchResult({required List<GenreDetails> searchList, required Orientation orientation}) {
+    return ListView(
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(left: 10.0, top: 20.0, bottom: 20.0),
+          child: Text(
+            'Top Results',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+          ),
+        ),
+        GridView.builder(
+          itemCount: searchList.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: orientation == Orientation.portrait ? 3 : 6, crossAxisSpacing: 5, mainAxisSpacing: 5, childAspectRatio: 2 / 3),
+          itemBuilder: (BuildContext context, int index) {
+            var data = searchList[index];
+            return InkResponse(
+              enableFeedback: true,
+              child: MovieCard(url: searchList[index].posterPath ?? ''),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => DetailsView(
+                    movieId: data.id ?? 0,
+                    title: data.title ?? '',
+                    releaseDate: data.releaseDate ?? '',
+                    voteAverage: data.voteAverage ?? 0,
+                    posterPath: data.posterPath ?? '',
+                    overview: data.overview ?? '',
+                  ),
+                ),
+              ),
+            );
+          },
+        )
+      ],
+    );
+  }
 }
 
 class GenreTile extends StatelessWidget {
@@ -156,11 +242,9 @@ class GenreTile extends StatelessWidget {
       padding: const EdgeInsets.all(5.0),
       child: InkWell(
         onTap: () {
-           Navigator.of(context).push(
+          Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => GenreView(
-                genreDetails : genre
-              ),
+              builder: (context) => GenreView(genreDetails: genre),
             ),
           );
         },

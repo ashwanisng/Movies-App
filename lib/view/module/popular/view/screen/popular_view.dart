@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,10 +51,11 @@ class _PopularMoviesViewState extends State<PopularMoviesView> {
                 );
               }
               if (state is PopularMoviesSuccessList) {
+                debugPrint('random :: ${Random().nextInt((state.moviesData?.length ?? 0) - 0)}');
                 return ListView(
                   physics: const BouncingScrollPhysics(),
                   children: [
-                    MainPosterWidget(size: size, recommendedMovie: state.moviesData![0]),
+                    MainPosterWidget(size: size, recommendedMovie: state.moviesData![Random().nextInt((state.moviesData?.length ?? 0) - 0)]),
                     const SizedBox(height: 30),
                     BuildListWidget(movieList: state.moviesData ?? [], orientation: orientation),
                   ],

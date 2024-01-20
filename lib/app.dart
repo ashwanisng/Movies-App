@@ -9,6 +9,7 @@ import 'package:movie_app/view/module/genre/bloc/genre_bloc.dart';
 import 'package:movie_app/view/module/home/home_view.dart';
 import 'package:movie_app/view/module/popular/bloc/popular_movie_bloc.dart';
 import 'package:movie_app/view/module/popular/bloc/popular_movie_event.dart';
+import 'package:movie_app/view/module/search/bloc/search_bloc.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -26,6 +27,7 @@ class _AppState extends State<App> {
       providers: [
         BlocProvider(create: (context) => PopularMoviesBloc(movieRepository: _movieRepo)..add(const GetPopularMoviesEvent())),
         BlocProvider(create: (context) => MovieDetailsBloc(movieRepository: _movieRepo)),
+        BlocProvider(create: (context) => SearchMovieBloc(searchRepository: _searchRepo)),
         BlocProvider(create: (context) => GenreBloc(searchRepository: _searchRepo)),
       ],
       child: MaterialApp(
