@@ -1,17 +1,26 @@
+import 'package:hive/hive.dart';
+
+part 'movie_response.g.dart';
+
+@HiveType(typeId: 0)
 class MovieResponse {
+  @HiveField(0)
   int? page;
-  List<Movie>? movie;
+  @HiveField(1)
+  List<MovieDetails>? movieDetails;
+  @HiveField(2)
   int? totalPages;
+  @HiveField(3)
   int? totalResults;
 
-  MovieResponse({this.page, this.movie, this.totalPages, this.totalResults});
+  MovieResponse({this.page, this.movieDetails, this.totalPages, this.totalResults});
 
   MovieResponse.fromJson(Map<String, dynamic> json) {
     page = json['page'];
     if (json['results'] != null) {
-      movie = <Movie>[];
+      movieDetails = <MovieDetails>[];
       json['results'].forEach((v) {
-        movie!.add(Movie.fromJson(v));
+        movieDetails!.add(MovieDetails.fromJson(v));
       });
     }
     totalPages = json['total_pages'];
@@ -21,8 +30,8 @@ class MovieResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['page'] = page;
-    if (movie != null) {
-      data['results'] = movie!.map((v) => v.toJson()).toList();
+    if (movieDetails != null) {
+      data['results'] = movieDetails!.map((v) => v.toJson()).toList();
     }
     data['total_pages'] = totalPages;
     data['total_results'] = totalResults;
@@ -30,25 +39,40 @@ class MovieResponse {
   }
 }
 
-class Movie {
+@HiveType(typeId: 1)
+class MovieDetails {
+  @HiveField(0)
   bool? adult;
+  @HiveField(1)
   String? backdropPath;
+  @HiveField(2)
   List<int>? genreIds;
+  @HiveField(3)
   int? id;
+  @HiveField(4)
   String? originalLanguage;
+  @HiveField(5)
   String? originalTitle;
+  @HiveField(6)
   String? overview;
-  double? popularity;
+  @HiveField(7)
+  num? popularity;
+  @HiveField(8)
   String? posterPath;
+  @HiveField(9)
   String? releaseDate;
+  @HiveField(10)
   String? title;
+  @HiveField(11)
   bool? video;
-  double? voteAverage;
+  @HiveField(12)
+  num? voteAverage;
+  @HiveField(13)
   int? voteCount;
 
-  Movie({this.adult, this.backdropPath, this.genreIds, this.id, this.originalLanguage, this.originalTitle, this.overview, this.popularity, this.posterPath, this.releaseDate, this.title, this.video, this.voteAverage, this.voteCount});
+  MovieDetails({this.adult, this.backdropPath, this.genreIds, this.id, this.originalLanguage, this.originalTitle, this.overview, this.popularity, this.posterPath, this.releaseDate, this.title, this.video, this.voteAverage, this.voteCount});
 
-  Movie.fromJson(Map<String, dynamic> json) {
+  MovieDetails.fromJson(Map<String, dynamic> json) {
     adult = json['adult'];
     backdropPath = json['backdrop_path'];
     genreIds = json['genre_ids'].cast<int>();

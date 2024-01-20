@@ -5,7 +5,7 @@ import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 
 class MainPosterWidget extends StatelessWidget {
   final Size size;
-  final Movie recommendedMovie;
+  final MovieDetails recommendedMovie;
   const MainPosterWidget({super.key, required this.size, required this.recommendedMovie});
 
   @override

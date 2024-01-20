@@ -4,7 +4,7 @@ import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 import 'package:movie_app/view/widget/movie_card_widget.dart';
 
 class BuildListWidget extends StatelessWidget {
-  final List<Movie> movieList;
+  final List<MovieDetails> movieList;
   final Orientation orientation;
   const BuildListWidget({super.key, required this.movieList, required this.orientation});
 

@@ -4,7 +4,7 @@ import 'package:movie_app/data/repository/search_repository.dart';
 import 'package:movie_app/data/response/response.dart';
 import 'package:movie_app/view/module/genre/bloc/genre_event.dart';
 import 'package:movie_app/view/module/genre/bloc/genre_state.dart';
-import 'package:movie_app/view/module/search/data/model/genre_response.dart';
+import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 
 class GenreBloc extends Bloc<GenreEvent, GenreState> {
   final SearchRepository _searchRepository;
@@ -18,9 +18,9 @@ class GenreBloc extends Bloc<GenreEvent, GenreState> {
     emit(const LoadingState());
     try {
       debugPrint("movie id is ${event.genreId}");
-      RepoResponse<GenreResponse> data = await _searchRepository.getMovieByGenre(event.genreId);
+      RepoResponse<MovieResponse> data = await _searchRepository.getMovieByGenre(event.genreId);
 
-      emit(GenreDetailsSuccess(genreList: data.data?.genreDetails ?? []));
+      emit(GenreDetailsSuccess(genreList: data.data?.movieDetails ?? []));
     } catch (e) {
       debugPrint(e.toString());
     }

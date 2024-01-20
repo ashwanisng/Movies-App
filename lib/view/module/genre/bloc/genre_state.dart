@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:movie_app/view/module/search/data/model/genre_response.dart';
+import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 
 abstract class GenreState extends Equatable {
   const GenreState();
@@ -15,6 +15,6 @@ class LoadingState extends GenreState {
 }
 
 class GenreDetailsSuccess extends GenreState {
-  final List<GenreDetails> genreList;
+  final List<MovieDetails> genreList;
   const GenreDetailsSuccess({required this.genreList});
 }

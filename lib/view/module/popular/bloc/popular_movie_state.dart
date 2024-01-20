@@ -15,8 +15,6 @@ class LoadingState extends PopularMoviesState {
 }
 
 class PopularMoviesSuccessList extends PopularMoviesState {
-  List<Movie>? moviesData;
-  PopularMoviesSuccessList({
-    this.moviesData,
-  });
+  List<MovieDetails>? moviesData;
+  PopularMoviesSuccessList({this.moviesData});
 }

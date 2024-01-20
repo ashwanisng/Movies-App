@@ -3,12 +3,12 @@ import 'package:movie_app/data/response/response.dart';
 import 'package:movie_app/model/services/network_service.dart';
 import 'package:movie_app/utils/helper/exception_handler.dart';
 import 'package:movie_app/utils/values/url.dart';
-import 'package:movie_app/view/module/search/data/model/genre_response.dart';
+import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 
 class SearchRepository {
   NetworkService controller = NetworkService();
 
-  Future<RepoResponse<GenreResponse>> getMovieByGenre(String genreId) async {
+  Future<RepoResponse<MovieResponse>> getMovieByGenre(String genreId) async {
     final response = await controller.get(
       path: Url.genre,
       query: {
@@ -20,9 +20,9 @@ class SearchRepository {
       },
     );
 
-    GenreResponse data = GenreResponse.fromJson(response);
+    MovieResponse data = MovieResponse.fromJson(response);
 
-    debugPrint('response :: ${data.genreDetails?.length}');
+    debugPrint('response :: ${data.movieDetails?.length}');
 
     return response is APIException
         ? RepoResponse(
@@ -31,7 +31,7 @@ class SearchRepository {
         : RepoResponse(data: data);
   }
 
-  Future<RepoResponse<GenreResponse>> searchMovies(String value) async {
+  Future<RepoResponse<MovieResponse>> searchMovies(String value) async {
     final response = await controller.get(
       path: Url.genre,
       query: {
@@ -43,9 +43,9 @@ class SearchRepository {
       },
     );
 
-    GenreResponse data = GenreResponse.fromJson(response);
+    MovieResponse data = MovieResponse.fromJson(response);
 
-    debugPrint('response :: ${data.genreDetails?.length}');
+    debugPrint('response :: ${data.movieDetails?.length}');
 
     return response is APIException
         ? RepoResponse(

@@ -4,11 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/utils/helper/debounce.dart';
 import 'package:movie_app/view/module/details/view/details_view.dart';
 import 'package:movie_app/view/module/genre/screen/genre_view.dart';
+import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 import 'package:movie_app/view/module/search/bloc/search_bloc.dart';
 import 'package:movie_app/view/module/search/bloc/search_event.dart';
 import 'package:movie_app/view/module/search/bloc/search_state.dart';
 import 'package:movie_app/view/module/search/data/model/genre.dart';
-import 'package:movie_app/view/module/search/data/model/genre_response.dart';
 import 'package:movie_app/view/module/search/screen/search_results.dart';
 import 'package:movie_app/view/widget/movie_card_widget.dart';
 
@@ -33,7 +33,6 @@ class _SearchViewState extends State<SearchView> {
 
   @override
   Widget build(BuildContext context) {
-    Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -185,7 +184,7 @@ class _SearchViewState extends State<SearchView> {
     );
   }
 
-  Widget searchResult({required List<GenreDetails> searchList, required Orientation orientation}) {
+  Widget searchResult({required List<MovieDetails> searchList, required Orientation orientation}) {
     return ListView(
       children: [
         const Padding(

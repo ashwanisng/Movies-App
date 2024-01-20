@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/utils/theme/app_colors.dart';
 import 'package:movie_app/utils/widgets/custom_app_bar.dart';
 import 'package:movie_app/utils/widgets/error_widget.dart';
 import 'package:movie_app/view/module/popular/bloc/popular_movie_bloc.dart';
@@ -50,7 +49,7 @@ class _PopularMoviesViewState extends State<PopularMoviesView> {
           await homeBloc.getPopularMovies();
         },
         child: Scaffold(
-          backgroundColor: AppColors.primaryColor,
+          // backgroundColor: AppColors.primaryColor,
           appBar: customAppBar(context),
           body: BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
             bloc: homeBloc,
@@ -80,5 +79,3 @@ class _PopularMoviesViewState extends State<PopularMoviesView> {
     );
   }
 }
-
-
