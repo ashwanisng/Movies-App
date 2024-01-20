@@ -17,7 +17,7 @@ class MainPosterWidget extends StatelessWidget {
           GestureDetector(
             onTap: () {},
             child: CachedNetworkImage(
-              cacheKey: 'main',
+              cacheKey: recommendedMovie.posterPath! + DateTime.now().day.toString(),
               imageUrl: Url.imageBaseUrlW400 + recommendedMovie.posterPath!,
               width: size.width,
               fit: BoxFit.cover,
