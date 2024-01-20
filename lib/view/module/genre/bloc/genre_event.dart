@@ -1,10 +1,5 @@
-import 'package:equatable/equatable.dart';
-
-abstract class GenreEvent extends Equatable {
+abstract class GenreEvent {
   const GenreEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
 class GetGenreEvent extends GenreEvent {

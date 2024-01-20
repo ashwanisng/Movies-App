@@ -1,10 +1,5 @@
-import 'package:equatable/equatable.dart';
-
-abstract class PopularMovieEvent extends Equatable {
+abstract class PopularMovieEvent {
   const PopularMovieEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
 class GetPopularMoviesEvent extends PopularMovieEvent {
