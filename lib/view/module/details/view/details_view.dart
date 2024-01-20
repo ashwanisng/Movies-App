@@ -143,7 +143,8 @@ class _DetailsViewState extends State<DetailsView> {
                               if (addedToFav) {
                                 box.get('movieList').removeWhere((element) => element.id == widget.movieDetails.id);
                               } else {
-                                box.get('movieList').add(widget.movieDetails);
+                                  box.get('movieList').add(widget.movieDetails);
+
                               }
                               box.put('movieList', box.get('movieList'));
                               addedToFav = !addedToFav;

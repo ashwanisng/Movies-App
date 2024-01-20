@@ -11,6 +11,5 @@ void main() async {
   Hive.registerAdapter(MovieResponseAdapter());
   Hive.registerAdapter(MovieDetailsAdapter());
   await Hive.openBox('fav');
-  // StorageUtils.initHive();
   runApp(const App());
 }
