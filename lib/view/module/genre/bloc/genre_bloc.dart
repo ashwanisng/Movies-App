@@ -17,10 +17,13 @@ class GenreBloc extends Bloc<GenreEvent, GenreState> {
   _mapGetMovieByGenre(GetGenreEvent event, Emitter<GenreState> emit) async {
     emit(const LoadingState());
     try {
-      debugPrint("movie id is ${event.genreId}");
-      RepoResponse<MovieResponse> data = await _searchRepository.getMovieByGenre(event.genreId);
+      RepoResponse<MovieResponse> movieResponse = await _searchRepository.getMovieByGenre(event.genreId);
 
-      emit(GenreDetailsSuccess(genreList: data.data?.movieDetails ?? []));
+      if (movieResponse.data != null) {
+        emit(GenreDetailsSuccess(genreList: movieResponse.data?.movieDetails ?? []));
+      } else {
+        emit(GenreDetailsError(msg: movieResponse.error?.message ?? ''));
+      }
     } catch (e) {
       debugPrint(e.toString());
     }

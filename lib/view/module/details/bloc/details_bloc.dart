@@ -17,10 +17,13 @@ class MovieDetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   _mapGetSimilarMovies(SimilarMoviesEvent event, Emitter<DetailsState> emit) async {
     emit(const LoadingState());
     try {
-      debugPrint("movie id is ${event.movieId}");
-      RepoResponse<SimilarMovieResponse> data = await _movieRepository.getSimilarMovies(event.movieId);
+      RepoResponse<SimilarMovieResponse> movieResponse = await _movieRepository.getSimilarMovies(event.movieId);
 
-      emit(SimilarMoviesList(moviesData: data.data?.similarMovies));
+      if (movieResponse.data != null) {
+        emit(SimilarMoviesList(moviesData: movieResponse.data?.similarMovies));
+      } else {
+        emit(SimilarMovieError(msg: movieResponse.error?.message ?? ""));
+      }
     } catch (e) {
       debugPrint(e.toString());
     }

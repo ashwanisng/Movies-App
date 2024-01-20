@@ -20,3 +20,8 @@ class SimilarMoviesList extends DetailsState {
     this.moviesData,
   });
 }
+
+class SimilarMovieError extends DetailsState {
+  String msg;
+  SimilarMovieError({required this.msg});
+}

@@ -18,3 +18,8 @@ class GenreDetailsSuccess extends GenreState {
   final List<MovieDetails> genreList;
   const GenreDetailsSuccess({required this.genreList});
 }
+
+class GenreDetailsError extends GenreState {
+  String msg;
+  GenreDetailsError({required this.msg});
+}
