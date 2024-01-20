@@ -42,7 +42,7 @@ class StorageUtils {
 
   static List<String>? getStringList(String key) => _box.get(key);
 
-  static MovieDetails? getMenuData() => _box.get(_movieData);
+  static MovieDetails? getMovieData() => _box.get(_movieData);
   //deletes..
   static Future<void> remove(String key) async => await _box.delete(key);
 

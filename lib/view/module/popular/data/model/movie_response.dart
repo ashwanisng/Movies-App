@@ -69,6 +69,8 @@ class MovieDetails {
   num? voteAverage;
   @HiveField(13)
   int? voteCount;
+  @HiveField(14)
+  bool? fav;
 
   MovieDetails({this.adult, this.backdropPath, this.genreIds, this.id, this.originalLanguage, this.originalTitle, this.overview, this.popularity, this.posterPath, this.releaseDate, this.title, this.video, this.voteAverage, this.voteCount});
 
@@ -87,6 +89,7 @@ class MovieDetails {
     video = json['video'];
     voteAverage = json['vote_average'];
     voteCount = json['vote_count'];
+    fav = json['fav'];
   }
 
   Map<String, dynamic> toJson() {
@@ -105,6 +108,7 @@ class MovieDetails {
     data['video'] = video;
     data['vote_average'] = voteAverage;
     data['vote_count'] = voteCount;
+    data['fav'] = fav;
     return data;
   }
 }

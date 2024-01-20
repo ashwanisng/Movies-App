@@ -21,12 +21,15 @@ class DetailsView extends StatefulWidget {
 
 class _DetailsViewState extends State<DetailsView> {
   late MovieDetailsBloc movieDetailsBloc;
-  bool addedToFav = false;
+  late bool addedToFav;
 
   @override
   void initState() {
     movieDetailsBloc = BlocProvider.of<MovieDetailsBloc>(context);
     movieDetailsBloc.add(SimilarMoviesEvent(widget.movieDetails.id ?? 0));
+    MovieDetails? data = StorageUtils.getMovieData();
+    addedToFav = data?.fav ?? false;
+    debugPrint('true hai kya?? ${data?.fav}');
     super.initState();
   }
 
@@ -110,6 +113,8 @@ class _DetailsViewState extends State<DetailsView> {
                           onPressed: () {
                             setState(() {
                               addedToFav = !addedToFav;
+
+                              widget.movieDetails.fav = addedToFav;
 
                               if (addedToFav) {
                                 StorageUtils.setMovieData(widget.movieDetails);
