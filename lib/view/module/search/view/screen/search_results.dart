@@ -56,7 +56,7 @@ class _SearchResultsState extends State<SearchResults> {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: AppColors.primaryColor,
       ),
       body: SingleChildScrollView(

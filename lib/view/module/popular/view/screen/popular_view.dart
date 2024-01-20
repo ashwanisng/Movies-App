@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/utils/theme/app_colors.dart';
 import 'package:movie_app/utils/widgets/error_widget.dart';
@@ -55,6 +56,7 @@ class _PopularMoviesViewState extends State<PopularMoviesView> {
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
     Size size = MediaQuery.of(context).size;
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: AppColors.primaryColor));
 
     return SafeArea(
       child: Scaffold(

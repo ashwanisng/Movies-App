@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:movie_app/data/response/response.dart';
 import 'package:movie_app/model/services/network_service.dart';
 import 'package:movie_app/utils/helper/exception_handler.dart';
@@ -22,8 +21,6 @@ class SearchRepository {
 
     MovieResponse data = MovieResponse.fromJson(response);
 
-    debugPrint('response :: ${data.movieDetails?.length}');
-
     return response is APIException
         ? RepoResponse(
             error: APIException(message: 'Something went wrong!'),
@@ -44,8 +41,6 @@ class SearchRepository {
     );
 
     MovieResponse data = MovieResponse.fromJson(response);
-
-    debugPrint('response :: ${data.movieDetails?.length}');
 
     return response is APIException
         ? RepoResponse(

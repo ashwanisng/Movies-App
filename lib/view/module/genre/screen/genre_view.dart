@@ -49,7 +49,6 @@ class _GenreViewState extends State<GenreView> {
               );
             }
             if (state is GenreDetailsSuccess) {
-              debugPrint('hello :: ${state.genreList.length}');
               var data = state.genreList;
               return GridView.builder(
                 itemCount: data.length,

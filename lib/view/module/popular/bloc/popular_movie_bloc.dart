@@ -37,7 +37,6 @@ class PopularMoviesBloc extends Bloc<PopularMovieEvent, PopularMoviesState> {
         movieDetailsList = [...movieDetailsList, ...movieResponse.data?.movieDetails ?? []];
         canLoadMore = pageNo < (movieResponse.data?.totalPages ?? 1);
         loadingMore = false;
-        debugPrint('len is :: ${movieDetailsList.length}');
         emit(PopularMoviesSuccessList(moviesData: movieDetailsList));
       } else {
         emit(PopularMoviesError(msg: movieResponse.error?.message ?? ''));

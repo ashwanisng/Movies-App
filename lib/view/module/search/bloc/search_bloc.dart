@@ -44,7 +44,6 @@ class SearchMovieBloc extends Bloc<SearchMovieEvent, SearchMovieState> {
         movieDetailsList = [...movieDetailsList, ...movieResponse.data?.movieDetails ?? []];
         canLoadMore = pageNo < (movieResponse.data?.totalPages ?? 1);
         loadingMore = false;
-        debugPrint('len is :: ${movieDetailsList.length}');
         emit(SearchSuccess(moviesData: movieDetailsList));
       } else {
         emit(SearchError(msg: movieResponse.error?.message ?? ''));

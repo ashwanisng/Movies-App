@@ -39,7 +39,6 @@ class MovieDetailsBloc extends Bloc<DetailsEvent, DetailsState> {
         movieDetailsList = [...movieDetailsList, ...movieResponse.data?.movieDetails ?? []];
         canLoadMore = pageNo < (movieResponse.data?.totalPages ?? 1);
         loadingMore = false;
-        debugPrint('len is :: ${movieDetailsList.length}');
         emit(SimilarMoviesList(moviesData: movieDetailsList));
       } else {
         emit(SimilarMovieError(msg: movieResponse.error?.message ?? ''));

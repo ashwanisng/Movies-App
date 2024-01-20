@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/utils/theme/app_colors.dart';
 import 'package:movie_app/utils/theme/styles.dart';
-import 'package:movie_app/view/module/favorites/view/screen/favorites_view.dart';
+import 'package:movie_app/view/module/favorites/favorites_view.dart';
 import 'package:movie_app/view/module/popular/view/screen/popular_view.dart';
 import 'package:movie_app/view/module/search/view/screen/search_view.dart';
 
