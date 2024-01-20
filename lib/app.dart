@@ -6,10 +6,10 @@ import 'package:movie_app/utils/theme/app_theme.dart';
 import 'package:movie_app/utils/values/env.dart';
 import 'package:movie_app/view/module/details/bloc/details_bloc.dart';
 import 'package:movie_app/view/module/genre/bloc/genre_bloc.dart';
-import 'package:movie_app/view/module/home/home_view.dart';
 import 'package:movie_app/view/module/popular/bloc/popular_movie_bloc.dart';
 import 'package:movie_app/view/module/popular/bloc/popular_movie_event.dart';
 import 'package:movie_app/view/module/search/bloc/search_bloc.dart';
+import 'package:movie_app/view/module/splash/splash_view.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -34,7 +34,7 @@ class _AppState extends State<App> {
         title: Env.title,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme,
-        home: const HomeView(),
+        home: const SplashView(),
       ),
     );
   }
