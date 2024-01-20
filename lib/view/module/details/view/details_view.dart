@@ -1,22 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/utils/storage_utils.dart';
 import 'package:movie_app/utils/theme/app_colors.dart';
 import 'package:movie_app/utils/values/url.dart';
 import 'package:movie_app/view/module/details/bloc/details_bloc.dart';
 import 'package:movie_app/view/module/details/bloc/details_event.dart';
 import 'package:movie_app/view/module/details/bloc/details_state.dart';
+import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 import 'package:movie_app/view/widget/similar_movie_layout.dart';
 
 class DetailsView extends StatefulWidget {
-  final int movieId;
-  final String title;
-  final String releaseDate;
-  final String posterPath;
-  final String overview;
-  final num voteAverage;
+  final MovieDetails movieDetails;
 
-  const DetailsView({super.key, required this.movieId, required this.title, required this.releaseDate, required this.voteAverage, required this.posterPath, required this.overview});
+  const DetailsView({super.key, required this.movieDetails});
 
   @override
   State<DetailsView> createState() => _DetailsViewState();
@@ -24,11 +21,12 @@ class DetailsView extends StatefulWidget {
 
 class _DetailsViewState extends State<DetailsView> {
   late MovieDetailsBloc movieDetailsBloc;
+  bool addedToFav = false;
 
   @override
   void initState() {
     movieDetailsBloc = BlocProvider.of<MovieDetailsBloc>(context);
-    movieDetailsBloc.add(SimilarMoviesEvent(widget.movieId ?? 0));
+    movieDetailsBloc.add(SimilarMoviesEvent(widget.movieDetails.id ?? 0));
     super.initState();
   }
 
@@ -51,7 +49,7 @@ class _DetailsViewState extends State<DetailsView> {
                 elevation: 0.0,
                 flexibleSpace: FlexibleSpaceBar(
                     background: CachedNetworkImage(
-                  imageUrl: Url.imageBaseUrlW500 + (widget.posterPath ?? ''),
+                  imageUrl: Url.imageBaseUrlW500 + (widget.movieDetails.posterPath ?? ''),
                   placeholder: (ctx, str) {
                     return Container();
                   },
@@ -73,7 +71,7 @@ class _DetailsViewState extends State<DetailsView> {
                   children: <Widget>[
                     Container(margin: const EdgeInsets.only(top: 5.0)),
                     Text(
-                      widget.title ?? 'Movie',
+                      widget.movieDetails.title ?? 'Movie',
                       style: const TextStyle(
                         fontSize: 25.0,
                         fontWeight: FontWeight.bold,
@@ -90,16 +88,14 @@ class _DetailsViewState extends State<DetailsView> {
                           margin: const EdgeInsets.only(left: 1.0, right: 1.0),
                         ),
                         Text(
-                          widget.voteAverage.toStringAsFixed(1),
-                          style: const TextStyle(
-                            fontSize: 18.0,
-                          ),
+                          widget.movieDetails.voteAverage?.toStringAsFixed(1) ?? '',
+                          style: const TextStyle(fontSize: 18.0),
                         ),
                         Container(
                           margin: const EdgeInsets.only(left: 10.0, right: 10.0),
                         ),
                         Text(
-                          widget.releaseDate ?? '-/-/-',
+                          widget.movieDetails.releaseDate ?? '-/-/-',
                           style: const TextStyle(
                             fontSize: 18.0,
                           ),
@@ -107,7 +103,28 @@ class _DetailsViewState extends State<DetailsView> {
                       ],
                     ),
                     Container(margin: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
-                    Text(widget.overview),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              addedToFav = !addedToFav;
+
+                              if (addedToFav) {
+                                StorageUtils.setMovieData(widget.movieDetails);
+                              } else {
+                                StorageUtils.remove('movieData');
+                              }
+                            });
+                          },
+                          icon: Icon(!addedToFav ? Icons.add : Icons.check),
+                        ),
+                        !addedToFav ? const Text('Add to Favorite') : const Text('Added to Favorite List')
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(widget.movieDetails.overview ?? ''),
                     Container(margin: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
                     const Text(
                       "Trailer",
@@ -147,4 +164,3 @@ class _DetailsViewState extends State<DetailsView> {
     );
   }
 }
-

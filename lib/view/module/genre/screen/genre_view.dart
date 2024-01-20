@@ -62,14 +62,7 @@ class _GenreViewState extends State<GenreView> {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => DetailsView(
-                            title: data[index].title ?? '',
-                            movieId: data[index].id ?? 0,
-                            releaseDate: data[index].releaseDate ?? '',
-                            voteAverage: data[index].voteAverage ?? 0,
-                            posterPath: data[index].posterPath ?? '',
-                            overview: data[index].overview ?? '',
-                          ),
+                          builder: (context) => DetailsView(movieDetails: data[index]),
                         ),
                       );
                     },

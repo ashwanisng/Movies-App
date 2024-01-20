@@ -118,7 +118,7 @@ class _SearchViewState extends State<SearchView> {
               listener: (context, state) {
                 if (state is SearchSuccess) {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => SearchResults(searchResultList: state.moviesData)),
+                    MaterialPageRoute(builder: (context) => SearchResults(searchResultList: state.moviesData ?? [])),
                   );
                 }
               },
@@ -209,14 +209,7 @@ class _SearchViewState extends State<SearchView> {
               child: MovieCard(url: searchList[index].posterPath ?? ''),
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => DetailsView(
-                    movieId: data.id ?? 0,
-                    title: data.title ?? '',
-                    releaseDate: data.releaseDate ?? '',
-                    voteAverage: data.voteAverage ?? 0,
-                    posterPath: data.posterPath ?? '',
-                    overview: data.overview ?? '',
-                  ),
+                  builder: (context) => DetailsView(movieDetails: data),
                 ),
               ),
             );

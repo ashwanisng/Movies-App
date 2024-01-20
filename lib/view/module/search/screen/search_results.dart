@@ -4,9 +4,9 @@ import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 import 'package:movie_app/view/widget/movie_card_widget.dart';
 
 class SearchResults extends StatefulWidget {
-  final List<MovieDetails>? searchResultList;
+  final List<MovieDetails> searchResultList;
 
-  const SearchResults({super.key, this.searchResultList});
+  const SearchResults({super.key, required this.searchResultList});
 
   @override
   State<SearchResults> createState() => _SearchResultsState();
@@ -32,30 +32,22 @@ class _SearchResultsState extends State<SearchResults> {
             ),
           ),
           GridView.builder(
-            itemCount: widget.searchResultList?.length,
+            itemCount: widget.searchResultList.length,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: orientation == Orientation.portrait ? 3 : 6, crossAxisSpacing: 5, mainAxisSpacing: 5, childAspectRatio: 2 / 3),
             itemBuilder: (BuildContext context, int index) {
-              var data = widget.searchResultList?[index];
               return InkResponse(
                 enableFeedback: true,
-                child: MovieCard(url: widget.searchResultList?[index].posterPath ?? ''),
+                child: MovieCard(url: widget.searchResultList[index].posterPath ?? ''),
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => DetailsView(
-                      movieId: data?.id ?? 0,
-                      title: data?.title ?? '',
-                      releaseDate: data?.releaseDate ?? '',
-                      voteAverage: data?.voteAverage ?? 0,
-                      posterPath: data?.posterPath ?? '',
-                      overview: data?.overview ?? '',
-                    ),
+                    builder: (context) => DetailsView(movieDetails: widget.searchResultList[index]),
                   ),
                 ),
               );
             },
-          )
+          ),
         ],
       ),
     );
