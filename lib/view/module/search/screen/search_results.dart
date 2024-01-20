@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/data/repository/search_repository.dart';
 import 'package:movie_app/utils/helper/debounce.dart';
+import 'package:movie_app/utils/theme/app_colors.dart';
+import 'package:movie_app/utils/theme/styles.dart';
 import 'package:movie_app/view/module/details/view/details_view.dart';
 import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 import 'package:movie_app/view/module/search/bloc/search_bloc.dart';
@@ -55,6 +57,7 @@ class _SearchResultsState extends State<SearchResults> {
     Orientation orientation = MediaQuery.of(context).orientation;
 
     return Scaffold(
+      backgroundColor: AppColors.primaryColor,
       appBar: AppBar(),
       body: SingleChildScrollView(
         controller: searchMovieBloc.scrollController,
@@ -83,10 +86,7 @@ class _SearchResultsState extends State<SearchResults> {
                       vertical: 0,
                       horizontal: 20,
                     ),
-                    hintStyle: TextStyle(
-                      letterSpacing: .0,
-                      color: Colors.white.withOpacity(.7),
-                    ),
+                     hintStyle: Styles.h5,
                     fillColor: Colors.white.withOpacity(.1),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -121,14 +121,11 @@ class _SearchResultsState extends State<SearchResults> {
                   controller: searchMovieBloc.searchController,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0, top: 20.0, bottom: 20.0),
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0, top: 20.0, bottom: 20.0),
                 child: Text(
                   'Top Results',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
+                  style: Styles.h4.copyWith(color: Colors.white),
                 ),
               ),
               BlocBuilder(

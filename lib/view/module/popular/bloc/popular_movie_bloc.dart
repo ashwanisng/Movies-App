@@ -8,6 +8,11 @@ import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 
 class PopularMoviesBloc extends Bloc<PopularMovieEvent, PopularMoviesState> {
   final MovieRepository _movieRepository;
+  final scrollController = ScrollController();
+  int pageNo = 1;
+  bool canLoadMore = true, loadingMore = false;
+  List<MovieDetails> movieDetailsList = [];
+
   PopularMoviesBloc({required MovieRepository movieRepository})
       : _movieRepository = movieRepository,
         super(PopularMovieInitial()) {
@@ -15,21 +20,30 @@ class PopularMoviesBloc extends Bloc<PopularMovieEvent, PopularMoviesState> {
   }
 
   _mapGetMoviesFeed(GetPopularMoviesEvent event, Emitter<PopularMoviesState> emit) async {
-    emit(const LoadingState());
+    if (movieDetailsList.isEmpty) {
+      pageNo = 1;
+      movieDetailsList.clear();
+      canLoadMore = true;
+      loadingMore = false;
+      emit(const LoadingState());
+    } else {
+      canLoadMore = true;
+      loadingMore = true;
+      emit(PopularMoviesSuccessList(moviesData: movieDetailsList));
+    }
     try {
-      List<MovieDetails>? data = await getPopularMovies();
-
-      emit(PopularMoviesSuccessList(moviesData: data));
+      RepoResponse<MovieResponse> movieResponse = await _movieRepository.getPopularMovies(pageNo);
+      if (movieResponse.data != null) {
+        movieDetailsList = [...movieDetailsList, ...movieResponse.data?.movieDetails ?? []];
+        canLoadMore = pageNo < (movieResponse.data?.totalPages ?? 1);
+        loadingMore = false;
+        debugPrint('len is :: ${movieDetailsList.length}');
+        emit(PopularMoviesSuccessList(moviesData: movieDetailsList));
+      } else {
+        emit(PopularMoviesError(msg: movieResponse.error?.message ?? ''));
+      }
     } catch (e) {
       debugPrint(e.toString());
-    }
-  }
-
-  getPopularMovies() async {
-    RepoResponse<MovieResponse> response = await _movieRepository.getPopularMovies();
-
-    if (response.data?.movieDetails?.isNotEmpty ?? false) {
-      return response.data?.movieDetails;
     }
   }
 }

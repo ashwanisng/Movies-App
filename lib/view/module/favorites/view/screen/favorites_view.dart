@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:movie_app/utils/theme/app_colors.dart';
+import 'package:movie_app/utils/theme/styles.dart';
 import 'package:movie_app/view/module/details/view/details_view.dart';
 import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 import 'package:movie_app/view/widget/movie_card_widget.dart';
@@ -28,9 +30,14 @@ class _FavoritesViewState extends State<FavoritesView> {
     final orientation = MediaQuery.of(context).orientation;
 
     return Scaffold(
-      
+      backgroundColor: AppColors.primaryColor,
       appBar: AppBar(
-        title: const Text('Favorites'),
+        title: Text(
+          'Favorites',
+          style: Styles.h4,
+        ),
+        centerTitle: true,
+        backgroundColor: AppColors.primaryColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/utils/theme/app_colors.dart';
+import 'package:movie_app/utils/theme/styles.dart';
 import 'package:movie_app/utils/values/url.dart';
 import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 
@@ -47,7 +49,7 @@ class MainPosterWidget extends StatelessWidget {
                     ),
                     Text(
                       recommendedMovie.voteAverage!.toStringAsFixed(1),
-                      style: const TextStyle(fontSize: 18.0, color: Colors.grey),
+                      style: Styles.h4.copyWith(color: Colors.grey),
                     ),
                   ],
                 ),
@@ -57,21 +59,21 @@ class MainPosterWidget extends StatelessWidget {
                     backgroundColor: Colors.white,
                     textStyle: Theme.of(context).textTheme.displayMedium,
                   ),
-                  child: const Text(
+                  child: Text(
                     'Play',
-                    style: TextStyle(fontSize: 18.0, color: Colors.black, fontWeight: FontWeight.bold),
+                    style: Styles.h4.copyWith(color: AppColors.primaryColor),
                   ),
                 ),
-                const Column(
+                Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.info_outline,
                       color: Colors.grey,
                     ),
                     Text(
                       'Info',
-                      style: TextStyle(fontSize: 18.0, color: Colors.grey),
+                      style: Styles.h4.copyWith(color: Colors.grey),
                     ),
                   ],
                 ),

@@ -9,10 +9,13 @@ import 'package:movie_app/view/module/popular/data/model/movie_response.dart';
 class MovieRepository {
   NetworkService controller = NetworkService();
 
-  Future<RepoResponse<MovieResponse>> getPopularMovies() async {
+  Future<RepoResponse<MovieResponse>> getPopularMovies(int pageNo) async {
     final response = await controller.get(
       path: Url.popularMovieUrl,
-      query: {'language': 'en-US', 'page': '1'},
+      query: {
+        'language': 'en-US',
+        'page': pageNo.toString(),
+      },
     );
 
     MovieResponse data = MovieResponse.fromJson(response);

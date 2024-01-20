@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/utils/theme/app_colors.dart';
+import 'package:movie_app/utils/theme/styles.dart';
 import 'package:movie_app/view/module/genre/screen/genre_view.dart';
 import 'package:movie_app/view/module/search/bloc/search_bloc.dart';
 import 'package:movie_app/view/module/search/data/model/genre.dart';
@@ -28,6 +30,7 @@ class _SearchViewState extends State<SearchView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.primaryColor,
       body: SafeArea(
         child: ListView(
           shrinkWrap: true,
@@ -35,11 +38,11 @@ class _SearchViewState extends State<SearchView> {
             const SizedBox(
               height: 50,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
                 "Search",
-                // style: heading.copyWith(color: Colors.cyanAccent, fontSize: 36),
+                style: Styles.h4.copyWith(fontSize: 36),
               ),
             ),
             const SizedBox(height: 10),
@@ -64,10 +67,7 @@ class _SearchViewState extends State<SearchView> {
                     vertical: 0,
                     horizontal: 20,
                   ),
-                  hintStyle: TextStyle(
-                    letterSpacing: .0,
-                    color: Colors.white.withOpacity(.7),
-                  ),
+                  hintStyle: Styles.h5,
                   fillColor: Colors.white.withOpacity(.1),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -91,14 +91,11 @@ class _SearchViewState extends State<SearchView> {
                 controller: searchController,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
               child: Text(
                 "Popular Genres",
-                // style: heading.copyWith(
-                //   color: Colors.white,
-                //   fontSize: 16,
-                // ),
+                style: Styles.h5,
               ),
             ),
             Padding(
@@ -118,14 +115,11 @@ class _SearchViewState extends State<SearchView> {
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
               child: Text(
                 "Browes all",
-                // style: heading.copyWith(
-                //   color: Colors.white,
-                //   fontSize: 16,
-                // ),
+                style: Styles.h5,
               ),
             ),
             Padding(
@@ -204,10 +198,10 @@ class GenreTile extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
                   child: Text(
                     genre.name ?? '',
-                    // style: normalText.copyWith(
-                    //   fontWeight: FontWeight.w700,
-                    //   color: Colors.white,
-                    // ),
+                    style: Styles.h5.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ],

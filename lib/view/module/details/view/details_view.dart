@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:movie_app/utils/theme/app_colors.dart';
+import 'package:movie_app/utils/theme/styles.dart';
 import 'package:movie_app/utils/values/url.dart';
 import 'package:movie_app/view/module/details/bloc/details_bloc.dart';
 import 'package:movie_app/view/module/details/bloc/details_event.dart';
@@ -28,14 +29,12 @@ class _DetailsViewState extends State<DetailsView> {
   void initState() {
     movieDetailsBloc = BlocProvider.of<MovieDetailsBloc>(context);
     movieDetailsBloc.add(SimilarMoviesEvent(widget.movieDetails.id ?? 0));
-    // var data = box.get('movieList') as List<MovieDetails>;
 
     if (box.get('movieList')?.isNotEmpty ?? false) {
       addedToFav = box.get('movieList')?.map((e) => e.id).contains(widget.movieDetails.id) ?? false;
     } else {
       addedToFav = false;
     }
-    // addedToFav = false;
     super.initState();
   }
 
@@ -44,6 +43,7 @@ class _DetailsViewState extends State<DetailsView> {
     Orientation orientation = MediaQuery.of(context).orientation;
 
     return Scaffold(
+      backgroundColor: AppColors.primaryColor,
       body: SafeArea(
         top: false,
         bottom: false,
@@ -81,9 +81,9 @@ class _DetailsViewState extends State<DetailsView> {
                     Container(margin: const EdgeInsets.only(top: 5.0)),
                     Text(
                       widget.movieDetails.title ?? 'Movie',
-                      style: const TextStyle(
+                      style: Styles.h4.copyWith(
                         fontSize: 25.0,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                     Container(margin: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
@@ -98,16 +98,14 @@ class _DetailsViewState extends State<DetailsView> {
                         ),
                         Text(
                           widget.movieDetails.voteAverage?.toStringAsFixed(1) ?? '',
-                          style: const TextStyle(fontSize: 18.0),
+                          style: Styles.h4,
                         ),
                         Container(
                           margin: const EdgeInsets.only(left: 10.0, right: 10.0),
                         ),
                         Text(
                           widget.movieDetails.releaseDate ?? '-/-/-',
-                          style: const TextStyle(
-                            fontSize: 18.0,
-                          ),
+                          style: Styles.h4,
                         ),
                       ],
                     ),
@@ -118,34 +116,29 @@ class _DetailsViewState extends State<DetailsView> {
                         IconButton(
                           onPressed: () {
                             setState(() {
-                              // List<MovieDetails> data = box.get('movieList') ?? <MovieDetails>[];
-
                               if (addedToFav) {
                                 box.get('movieList').removeWhere((element) => element.id == widget.movieDetails.id);
                               } else {
                                 box.get('movieList').add(widget.movieDetails);
                               }
-
                               box.put('movieList', box.get('movieList'));
-
-                              // StorageUtils.setMovieData(data);
                               addedToFav = !addedToFav;
                             });
                           },
-                          icon: Icon(!addedToFav ? Icons.add : Icons.check),
+                          icon: Icon(
+                            !addedToFav ? Icons.add : Icons.check,
+                            color: Colors.white,
+                          ),
                         ),
-                        !addedToFav ? const Text('Add to Favorite') : const Text('Added to Favorite List')
+                        !addedToFav ? Text('Add to Favorite', style: Styles.h5.copyWith(fontWeight: FontWeight.w600)) : Text('Added to Favorite List', style: Styles.h5.copyWith(fontWeight: FontWeight.w600))
                       ],
                     ),
                     const SizedBox(height: 8),
-                    Text(widget.movieDetails.overview ?? ''),
+                    Text(widget.movieDetails.overview ?? '', style: Styles.h5),
                     Container(margin: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
-                    const Text(
-                      "Trailer",
-                      style: TextStyle(
-                        fontSize: 25.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Text(
+                      "Similar Movies",
+                      style: Styles.h4.copyWith(fontSize: 25, fontWeight: FontWeight.w700),
                     ),
                     Container(margin: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
                     BlocBuilder<MovieDetailsBloc, DetailsState>(
@@ -157,14 +150,15 @@ class _DetailsViewState extends State<DetailsView> {
                           );
                         }
                         if (state is SimilarMoviesList) {
-                          debugPrint('hello :: ${state.moviesData?.length}');
                           return SimilarMovieLayout(
                             data: state.moviesData ?? [],
                             orientation: orientation,
                           );
                         } else {
                           debugPrint('no hello');
-                          return const Center(child: Text("No trailer available"));
+                          return Center(
+                            child: Text("No trailer available", style: Styles.h5),
+                          );
                         }
                       },
                     ),

@@ -18,3 +18,8 @@ class PopularMoviesSuccessList extends PopularMoviesState {
   List<MovieDetails>? moviesData;
   PopularMoviesSuccessList({this.moviesData});
 }
+
+class PopularMoviesError extends PopularMoviesState {
+  String msg;
+  PopularMoviesError({required this.msg});
+}
