@@ -6,8 +6,8 @@ import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  var dir = await getApplicationDocumentsDirectory();
-  await Hive.initFlutter(dir.path);
+  // var dir = await getApplicationDocumentsDirectory();
+  await Hive.initFlutter();
   Hive.registerAdapter(MovieResponseAdapter());
   Hive.registerAdapter(MovieDetailsAdapter());
   await Hive.openBox('fav');

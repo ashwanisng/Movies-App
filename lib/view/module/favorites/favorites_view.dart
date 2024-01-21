@@ -14,8 +14,14 @@ class FavoritesView extends StatefulWidget {
 }
 
 class _FavoritesViewState extends State<FavoritesView> {
-  List<MovieDetails> movieList = [];
   var box = Hive.box('fav');
+  late List data;
+
+  @override
+  void initState() {
+    data = box.get('movieList') ?? [];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +37,7 @@ class _FavoritesViewState extends State<FavoritesView> {
         centerTitle: true,
         backgroundColor: AppColors.primaryColor,
       ),
-      body: box.get('movieList')?.length == 0
+      body: data.isEmpty
           ? Center(
               child: Text(
                 'No Result Found!',
@@ -41,19 +47,33 @@ class _FavoritesViewState extends State<FavoritesView> {
           : Padding(
               padding: const EdgeInsets.all(8.0),
               child: GridView.builder(
-                itemCount: box.get('movieList')?.length ?? 0,
+                itemCount: data.length ?? 0,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: orientation == Orientation.portrait ? 3 : 6, crossAxisSpacing: 5, mainAxisSpacing: 5, childAspectRatio: 2 / 3),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: orientation == Orientation.portrait ? 3 : 6,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 5,
+                    childAspectRatio: 2 / 3),
                 itemBuilder: (BuildContext context, int index) {
                   return InkResponse(
                     enableFeedback: true,
-                    child: MovieCard(url: box.get('movieList')?[index].posterPath ?? ''),
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => DetailsView(movieDetails: box.get('movieList')?[index] ?? MovieDetails()),
-                      ),
-                    ),
+                    child: MovieCard(url: data[index].posterPath ?? ''),
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(
+                        MaterialPageRoute(
+                          builder: (context) => DetailsView(
+                              movieDetails: data[index] ?? MovieDetails()),
+                        ),
+                      )
+                          .then(
+                        (value) {
+                          data = box.get('movieList');
+                          setState(() {});
+                        },
+                      );
+                    },
                   );
                 },
               ),

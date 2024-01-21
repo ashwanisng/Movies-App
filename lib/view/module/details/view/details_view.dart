@@ -32,7 +32,11 @@ class _DetailsViewState extends State<DetailsView> {
     movieDetailsBloc.scrollController.addListener(_onScroll);
 
     if (box.get('movieList')?.isNotEmpty ?? false) {
-      addedToFav = box.get('movieList')?.map((e) => e.id).contains(widget.movieDetails.id) ?? false;
+      addedToFav = box
+              .get('movieList')
+              ?.map((e) => e.id)
+              .contains(widget.movieDetails.id) ??
+          false;
     } else {
       addedToFav = false;
     }
@@ -40,7 +44,9 @@ class _DetailsViewState extends State<DetailsView> {
   }
 
   void _onScroll() {
-    if (_isBottom && movieDetailsBloc.canLoadMore && !movieDetailsBloc.loadingMore) {
+    if (_isBottom &&
+        movieDetailsBloc.canLoadMore &&
+        !movieDetailsBloc.loadingMore) {
       movieDetailsBloc.pageNo++;
       movieDetailsBloc.add(SimilarMoviesEvent(widget.movieDetails.id ?? 0));
     }
@@ -50,7 +56,8 @@ class _DetailsViewState extends State<DetailsView> {
     if (!movieDetailsBloc.scrollController.hasClients) {
       return false;
     }
-    final maxScroll = movieDetailsBloc.scrollController.position.maxScrollExtent;
+    final maxScroll =
+        movieDetailsBloc.scrollController.position.maxScrollExtent;
     final currentScroll = movieDetailsBloc.scrollController.offset;
     return currentScroll >= (maxScroll * 0.85);
   }
@@ -81,7 +88,8 @@ class _DetailsViewState extends State<DetailsView> {
                 elevation: 0.0,
                 flexibleSpace: FlexibleSpaceBar(
                     background: CachedNetworkImage(
-                  imageUrl: Url.imageBaseUrlW500 + (widget.movieDetails.posterPath ?? ''),
+                  imageUrl: Url.imageBaseUrlW500 +
+                      (widget.movieDetails.posterPath ?? ''),
                   placeholder: (ctx, str) {
                     return Container();
                   },
@@ -110,7 +118,8 @@ class _DetailsViewState extends State<DetailsView> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    Container(margin: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
+                    Container(
+                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
                     Row(
                       children: <Widget>[
                         const Icon(
@@ -121,11 +130,13 @@ class _DetailsViewState extends State<DetailsView> {
                           margin: const EdgeInsets.only(left: 1.0, right: 1.0),
                         ),
                         Text(
-                          widget.movieDetails.voteAverage?.toStringAsFixed(1) ?? '',
+                          widget.movieDetails.voteAverage?.toStringAsFixed(1) ??
+                              '',
                           style: Styles.h4,
                         ),
                         Container(
-                          margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+                          margin:
+                              const EdgeInsets.only(left: 10.0, right: 10.0),
                         ),
                         Text(
                           widget.movieDetails.releaseDate ?? '-/-/-',
@@ -133,20 +144,22 @@ class _DetailsViewState extends State<DetailsView> {
                         ),
                       ],
                     ),
-                    Container(margin: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
+                    Container(
+                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         IconButton(
                           onPressed: () {
+                            List data = box.get('movieList') ?? [];
                             setState(() {
                               if (addedToFav) {
-                                box.get('movieList').removeWhere((element) => element.id == widget.movieDetails.id);
+                                data.removeWhere((element) =>
+                                    element.id == widget.movieDetails.id);
                               } else {
-                                  box.get('movieList').add(widget.movieDetails);
-
+                                data.add(widget.movieDetails);
                               }
-                              box.put('movieList', box.get('movieList'));
+                              box.put('movieList', data);
                               addedToFav = !addedToFav;
                             });
                           },
@@ -155,17 +168,26 @@ class _DetailsViewState extends State<DetailsView> {
                             color: Colors.white,
                           ),
                         ),
-                        !addedToFav ? Text('Add to Favorite', style: Styles.h5.copyWith(fontWeight: FontWeight.w600)) : Text('Added to Favorite List', style: Styles.h5.copyWith(fontWeight: FontWeight.w600))
+                        !addedToFav
+                            ? Text('Add to Favorite',
+                                style: Styles.h5
+                                    .copyWith(fontWeight: FontWeight.w600))
+                            : Text('Added to Favorite List',
+                                style: Styles.h5
+                                    .copyWith(fontWeight: FontWeight.w600))
                       ],
                     ),
                     const SizedBox(height: 8),
                     Text(widget.movieDetails.overview ?? '', style: Styles.h5),
-                    Container(margin: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
+                    Container(
+                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
                     Text(
                       "Similar Movies",
-                      style: Styles.h4.copyWith(fontSize: 25, fontWeight: FontWeight.w700),
+                      style: Styles.h4
+                          .copyWith(fontSize: 25, fontWeight: FontWeight.w700),
                     ),
-                    Container(margin: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
+                    Container(
+                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0)),
                     BlocBuilder<MovieDetailsBloc, DetailsState>(
                       bloc: movieDetailsBloc,
                       builder: (context, state) {
@@ -181,7 +203,8 @@ class _DetailsViewState extends State<DetailsView> {
                           );
                         } else {
                           return Center(
-                            child: Text("No trailer available", style: Styles.h5),
+                            child:
+                                Text("No trailer available", style: Styles.h5),
                           );
                         }
                       },
